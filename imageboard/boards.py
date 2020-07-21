@@ -11,6 +11,11 @@ def index():
 
 @bp.route('/<board>/', methods=['GET', 'POST'])
 def board_paged(board):
+    if request.method == 'POST':
+        body = request.form["body"]
+        post = Post(body=body)
+        pdb.session.add(post)
+        pdb.session.commit()
     try:
         page = int((lambda x: x if x is not None else 0)(request.args.get('page', None)))
     except ValueError:
@@ -18,7 +23,7 @@ def board_paged(board):
     posts = Post.query.all()[page*PAGE_SIZE:page*PAGE_SIZE+PAGE_SIZE]
     return jsonify([str(p) for p in posts])
 
-@bp.route('/<board>/catalog')
+@bp.route('/<board>/catalog', methods=['GET', 'POST'])
 def board_catalog(board):
     if request.method == 'POST':
         body = request.form["body"]
