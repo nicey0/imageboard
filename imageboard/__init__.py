@@ -25,3 +25,7 @@ app.add_url_rule("/", endpoint="index")
 # Auth
 # from . import auth
 # app.register_blueprint(auth.bp)
+
+# Click commands
+from . import clickcomm as cc
+cc.add_commands()
