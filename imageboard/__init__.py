@@ -1,26 +1,26 @@
-import os
 from flask import Flask
 
 app = Flask(__name__)
 puri = "postgresql://localhost:5432/imageboard"
 
 class Production:
-    SECRET_KEY = os.urandom(32)
+    SECRET_KEY = "TODO"
     SQLALCHEMY_DATABASE_URI = puri
+    SQLALCHEMY_TRACK_MODIFICATIONS = True
 class Development:
     SECRET_KEY = "dev"
     SQLALCHEMY_DATABASE_URI = puri
-app.config.from_object(Production())
+    SQLALCHEMY_TRACK_MODIFICATIONS = True
+app.config.from_object(Development())
 
 # Database
 from . import db
-db.pdb.create_all()
-# db.init_app(app)
+db.init_app(app)
 
-# Main
-# from . import main
-# app.register_blueprint(main.bp)
-# app.add_url_rule("/", endpoint="index")
+# Board
+from . import boards
+app.register_blueprint(boards.bp)
+app.add_url_rule("/", endpoint="index")
 
 # Auth
 # from . import auth
