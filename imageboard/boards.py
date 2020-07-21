@@ -11,7 +11,10 @@ def index():
 
 @bp.route('/<board>/', methods=['GET', 'POST'])
 def board_paged(board):
-    page = (lambda x: x if x is not None else 0)(request.args.get('page', None))
+    try:
+        page = int((lambda x: x if x is not None else 0)(request.args.get('page', None)))
+    except ValueError:
+        page = 0
     posts = Post.query.all()[page*PAGE_SIZE:page*PAGE_SIZE+PAGE_SIZE]
     return jsonify([str(p) for p in posts])
 
