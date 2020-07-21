@@ -1,6 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
 from flask.cli import with_appcontext
-from datetime import datetime as dt
 import click
 import imageboard as i
 
@@ -10,7 +9,7 @@ class Post(pdb.Model):
     uid = pdb.Column(pdb.Integer, primary_key=True)
     title = pdb.Column(pdb.String(2000), unique=True, nullable=False)
     body = pdb.Column(pdb.String(10000))
-    created = pdb.Column(pdb.DateTime(default=dt.utcnow))
+    created = pdb.Column(pdb.DateTime)
 
     def __repr__(self):
         return f"<Post [{self.title[:161]}]>"
@@ -22,6 +21,14 @@ class Admin(pdb.Model):
 
     def __repr__(self):
         return f"<Admin [{self.email}]>"
+
+class Board(pdb.Model):
+    uid = pdb.Column(pdb.Integer, primary_key=True)
+    alias = pdb.String(1)
+    name = pdb.String(160)
+
+    def __repr__(self):
+        return f"<Board [{self.name}]>"
 
 def init_db():
     pdb.create_all()
