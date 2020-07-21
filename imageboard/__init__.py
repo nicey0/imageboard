@@ -13,10 +13,6 @@ class Development:
     SQLALCHEMY_TRACK_MODIFICATIONS = True
 app.config.from_object(Development())
 
-# Database
-from . import db
-db.init_app(app)
-
 # Board
 from . import boards
 app.register_blueprint(boards.bp)
