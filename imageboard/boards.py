@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, render_template, request, redirect, url_for, jsonify
 from datetime import datetime as dt
 from .db import pdb, Post
 
@@ -11,12 +11,11 @@ def index():
 @bp.route('/<board>/', methods=['GET', 'POST'])
 def board_paged(board):
     if request.method == 'POST':
-        title = request.form["title"]
         body = request.form["body"]
-        post = Post(title, body, dt.utcnow())
+        post = Post(body=body)
         pdb.session.add(post)
-        pdb.psession.commit()
-    return f"Board: {board}"
+        pdb.session.commit()
+    return jsonify([str(p) for p in Post.query.all()])
 
 @bp.route('/<board>/catalog')
 def board_catalog(board):
