@@ -3,6 +3,7 @@ from datetime import datetime as dt
 from .db import pdb, Post
 
 bp = Blueprint('boards', __name__)
+PAGE_SIZE = 10
 
 @bp.route('/')
 def index():
@@ -10,7 +11,9 @@ def index():
 
 @bp.route('/<board>/', methods=['GET', 'POST'])
 def board_paged(board):
-    return f"Board paged: {board}"
+    page = (lambda x: x if x is not None else 0)(request.args.get('page', None))
+    posts = Post.query.all()[page*PAGE_SIZE:page*PAGE_SIZE+PAGE_SIZE]
+    return jsonify([str(p) for p in posts])
 
 @bp.route('/<board>/catalog')
 def board_catalog(board):
