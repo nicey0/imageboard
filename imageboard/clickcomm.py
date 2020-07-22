@@ -5,7 +5,7 @@ from flask.cli import with_appcontext
 
 @click.command('init-db')
 @with_appcontext
-def init_db_command():
+def init_db():
     pdb.drop_all()
     pdb.create_all()
     click.echo("Initialized database.")
@@ -14,11 +14,14 @@ def init_db_command():
 @with_appcontext
 def add_test_posts():
     [pdb.session.delete(p) for p in Post.query.all()]
-    for i in range(5):
-        for k in range(10):
-            pdb.session.add(Post(body=f"post{i}-{k}"))
+    boards = 'abcdefghijklmnopqrstuvwxyz'
+    for alias in boards:
+        board = Board.query.filter_by(alias=alias).first()
+        for i in range(5):
+            for k in range(10):
+                pdb.session.add(Post(body=f"/{alias}/post{i}-{k}", board_alias=board.alias))
     pdb.session.commit()
-    click.echo("5 pages added (10 posts each)")
+    click.echo("5 pages added (10 posts each) for each board (/a/ to /z/)")
 
 @click.command('init-boards')
 @with_appcontext
@@ -37,7 +40,7 @@ def click_help():
     click.echo("init-boards: Deletes and re-initializes all boards")
 
 def add_commands():
-    app.cli.add_command(init_db_command)
+    app.cli.add_command(init_db)
     app.cli.add_command(add_test_posts)
     app.cli.add_command(init_boards)
     app.cli.add_command(click_help)
