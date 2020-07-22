@@ -3,7 +3,7 @@ from .db import pdb, Board, Post
 
 bp = Blueprint('boards', __name__)
 PAGE_SIZE = 10
-POST_LIMIT = 50
+POST_LIMIT = 150
 
 def board_addpost(form, board, pdb):
     alias = Board.query.filter_by(alias=board).first().alias
