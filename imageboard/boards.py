@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for, jsonify
-from .db import pdb, Post
+from .db import pdb, Board, Post
 
 bp = Blueprint('boards', __name__)
 PAGE_SIZE = 10
@@ -10,12 +10,15 @@ def board_addpost(form, pdb):
     )
     pdb.session.commit()
 
+def get_all_boards():
+    return Board.query.all()
+
 def get_posts_for_board(alias: str):
     return Post.query.filter_by(board_alias=alias)
 
 @bp.route('/')
 def index():
-    return "Index"
+    return jsonify([str(b) for b in get_all_boards()])
 
 @bp.route('/<board>/', methods=['GET', 'POST'])
 def board_paged(board):

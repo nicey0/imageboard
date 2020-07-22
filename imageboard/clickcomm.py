@@ -19,7 +19,7 @@ def add_test_posts():
         board = Board.query.filter_by(alias=alias).first()
         for i in range(5):
             for k in range(10):
-                pdb.session.add(Post(body=f"/{alias}/post{i}-{k}", board_alias=board.alias))
+                pdb.session.add(Post(body=f"post{i}-{k}", board_alias=board.alias))
     pdb.session.commit()
     click.echo("5 pages added (10 posts each) for each board (/a/ to /z/)")
 

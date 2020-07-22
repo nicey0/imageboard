@@ -17,7 +17,7 @@ class Board(pdb.Model):
     posts = pdb.relationship("Post", backref="board", lazy=True)
 
     def __repr__(self):
-        return f"<Board [{self.name}]>"
+        return f"<Board [{self.name} | {len(self.posts)}]>"
 
 class Post(pdb.Model):
     uid = pdb.Column(pdb.Integer, primary_key=True, nullable=False)
@@ -26,5 +26,5 @@ class Post(pdb.Model):
     # board = pdb.relationship('Board')
 
     def __repr__(self):
-        return f"<Post {self.body[:80]}>"
+        return f"<Post [/{self.board_alias}/ | {self.body[:80]}]>"
         # return f"<Post [{self.board_alias} | {self.body[:80]}]>"
