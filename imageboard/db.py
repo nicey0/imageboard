@@ -1,8 +1,27 @@
 from flask_sqlalchemy import SQLAlchemy
 import imageboard as i
+# utcnow ------
+from sqlalchemy.sql import expression
+from sqlalchemy.ext.compiler import compiles
+from sqlalchemy.types import DateTime
+# utcnow ------
 
 pdb = SQLAlchemy(i.app)
 pdb.init_app(i.app)
+
+# utcnow()
+class utcnow(expression.FunctionElement):
+    type = DateTime()
+
+@compiles(utcnow, 'postgresql')
+def pg_utcnow(element, compiler, **kw):
+    return "TIMEZONE('utc', CURRENT_TIMESTAMP)"
+
+@compiles(utcnow, 'mssql')
+def ms_utcnow(element, compiler, **kw):
+    return "GETUTCDATE()"
+
+# Models
 
 class Admin(pdb.Model):
     uid = pdb.Column(pdb.Integer, primary_key=True, nullable=False)
@@ -24,6 +43,7 @@ class Post(pdb.Model):
     uid = pdb.Column(pdb.Integer, primary_key=True, nullable=False)
     body = pdb.Column(pdb.String(10000), nullable=False)
     board_alias = pdb.Column(pdb.String(1), pdb.ForeignKey('board.alias'), nullable=False)
+    created = pdb.Column(pdb.DateTime, server_default=utcnow())
 
     def __repr__(self):
         return f"<Post [/{self.board_alias}/ | {self.body[:80]}]>"
