@@ -1,5 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 import imageboard as i
+from enum import Enum
 # utcnow ------
 from sqlalchemy.sql import expression
 from sqlalchemy.ext.compiler import compiles
@@ -22,11 +23,14 @@ def ms_utcnow(element, compiler, **kw):
     return "GETUTCDATE()"
 
 # Models
-
+class AdminTypes(Enum):
+    ADMIN = 0
+    MOD = 1
 class Admin(pdb.Model):
     uid = pdb.Column(pdb.Integer, primary_key=True, nullable=False)
     email = pdb.Column(pdb.String(160), nullable=False)
     password = pdb.Column(pdb.String(160), nullable=False)
+    rank = pdb.Column(pdb.Enum(AdminTypes))
 
     def __repr__(self):
         return f"<Admin [{self.uid} | {self.email}]>"
