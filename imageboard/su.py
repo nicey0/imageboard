@@ -22,7 +22,11 @@ def register():
 @bp.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        pass
+        email = request.form["email"]
+        password = request.form["password"]
+        admin = Admin.query.filter_by(email=email)
+        if check_password_hash(admin.password, password):
+            session['su'] = admin.uid
     return (str(a) for a in Admin.query.all())
 
 @bp.route('/logout')

@@ -23,8 +23,6 @@ class Post(pdb.Model):
     uid = pdb.Column(pdb.Integer, primary_key=True, nullable=False)
     body = pdb.Column(pdb.String(10000), nullable=False)
     board_alias = pdb.Column(pdb.String(1), pdb.ForeignKey('board.alias'), nullable=False)
-    # board = pdb.relationship('Board')
 
     def __repr__(self):
         return f"<Post [/{self.board_alias}/ | {self.body[:80]}]>"
-        # return f"<Post [{self.board_alias} | {self.body[:80]}]>"
