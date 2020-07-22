@@ -33,7 +33,7 @@ class Super(pdb.Model):
     rank = pdb.Column(pdb.Enum(SuperTypes))
 
     def __repr__(self):
-        return f"<Admin [{self.uid} | {self.email}]>"
+        return f"<{self.__class__.__name__} [{self.uid} | {self.email}]>"
 
 class Board(pdb.Model):
     alias = pdb.Column(pdb.String(1), primary_key=True, nullable=False)
@@ -41,7 +41,7 @@ class Board(pdb.Model):
     posts = pdb.relationship("Post", backref="board", lazy=True)
 
     def __repr__(self):
-        return f"<Board [{self.alias}/{self.name} | {len(self.posts)}]>"
+        return f"<{self.__class__.__name__} [{self.alias}/{self.name} | {len(self.posts)}]>"
 
 class Post(pdb.Model):
     uid = pdb.Column(pdb.Integer, primary_key=True, nullable=False)
@@ -50,4 +50,4 @@ class Post(pdb.Model):
     created = pdb.Column(pdb.DateTime, server_default=utcnow())
 
     def __repr__(self):
-        return f"<Post [/{self.board_alias}/ | {self.created} | {self.body[:50]}]>"
+        return f"<{self.__class__.__name__} [/{self.board_alias}/ | {self.created} | {self.body[:50]}]>"
