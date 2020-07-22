@@ -4,9 +4,10 @@ from .db import pdb, Board, Post
 bp = Blueprint('boards', __name__)
 PAGE_SIZE = 10
 
-def board_addpost(form, pdb):
+def board_addpost(form, board, pdb):
+    alias = Board.query.filter_by(alias=board).first().alias
     pdb.session.add(
-        Post(body=form["body"])
+        Post(body=form["body"], board_alias=alias)
     )
     pdb.session.commit()
 
@@ -23,7 +24,7 @@ def index():
 @bp.route('/<board>/', methods=['GET', 'POST'])
 def board_paged(board):
     if request.method == 'POST':
-        board_addpost(request.form, pdb)
+        board_addpost(request.form, board, pdb)
     try:
         page = int((lambda x: x if x is not None else 0)(request.args.get('page', None)))
     except ValueError:
@@ -34,5 +35,5 @@ def board_paged(board):
 @bp.route('/<board>/catalog', methods=['GET', 'POST'])
 def board_catalog(board):
     if request.method == 'POST':
-        board_addpost(request.form, pdb)
+        board_addpost(request.form, board, pdb)
     return jsonify([str(p) for p in get_posts_for_board(board)])
