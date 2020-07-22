@@ -3,6 +3,7 @@ from .db import pdb, Board, Post
 
 bp = Blueprint('boards', __name__)
 PAGE_SIZE = 10
+POST_LIMIT = 50
 
 def board_addpost(form, board, pdb):
     alias = Board.query.filter_by(alias=board).first().alias
@@ -15,7 +16,12 @@ def get_all_boards():
     return Board.query.all()
 
 def get_posts_for_board(alias: str):
-    return Board.query.filter_by(alias=alias).first().posts.order_by(Post.created)
+    posts = Post.query.filter_by(board_alias=alias).order_by(Post.created.asc()).all()
+    if len(posts) > POST_LIMIT:
+        for post in posts[POST_LIMIT:]:
+            pdb.session.delete(post)
+        pdb.session.commit()
+    return posts
 
 def page_exists(posts):
     return len(posts) > 0
