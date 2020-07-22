@@ -15,8 +15,8 @@ def init_db_command():
 def add_test_posts():
     [pdb.session.delete(p) for p in Post.query.all()]
     for i in range(5):
-        for _ in range(10):
-            pdb.session.add(Post(body=f"post{i}"))
+        for k in range(10):
+            pdb.session.add(Post(body=f"post{i}-{k}"))
     pdb.session.commit()
     click.echo("5 pages added (10 posts each)")
 
