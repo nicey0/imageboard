@@ -18,7 +18,7 @@ def get_posts_for_board(alias: str):
     return Board.query.filter_by(alias=alias).first().posts.order_by(Post.created)
 
 def page_exists(posts):
-    return len(posts)
+    return len(posts) > 0
 
 @bp.route('/', methods=['GET', 'POST'])
 def index():
