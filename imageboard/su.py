@@ -40,10 +40,13 @@ def login():
 @login_required
 @bp.route('/delete', methods=['POST'])
 def delete_post():
+    # extra check
     uid = request.form["uid"]
-    for post in Post.query.filter_by(uid=uid).all():
-        pdb.session.delete(post)
-    pdb.session.commit()
+    post = Post.query.filter_by(uid=uid).first():
+    board = post.board_alias
+    if [Admin.query.filter_by(uid=g.su).all()] > 0:
+        pdb.session.commit()
+    return redirect(url_for('board_paged', board=board))
 
 @bp.route('/logout')
 def logout():
