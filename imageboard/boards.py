@@ -12,6 +12,9 @@ def board_addpost(method, form, pdb):
         )
         pdb.session.commit()
 
+def get_posts_for_board(alias: str):
+    return Post.query.filter_by(board_alias=alias)
+
 @bp.route('/')
 def index():
     return "Index"
@@ -23,10 +26,10 @@ def board_paged(board):
         page = int((lambda x: x if x is not None else 0)(request.args.get('page', None)))
     except ValueError:
         page = 0
-    posts = Post.query.all()[page*PAGE_SIZE:page*PAGE_SIZE+PAGE_SIZE]
-    return jsonify([str(p) for p in posts])
+    return jsonify([str(p) for p in get_posts_for_board(board)
+                    [page*PAGE_SIZE:page*PAGE_SIZE+PAGE_SIZE]])
 
 @bp.route('/<board>/catalog', methods=['GET', 'POST'])
 def board_catalog(board):
     board_addpost(request.method, request.form, pdb)
-    return jsonify([str(p) for p in Post.query.all()])
+    return jsonify([str(p) for p in get_posts_for_board(board)])
