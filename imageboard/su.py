@@ -13,7 +13,7 @@ def login_required(view):
     @wraps(view)
     def wrapper_view(**kwargs):
         if g.su is None:
-            return redirect(url_for('login'))
+            return redirect(url_for('index'))
         return view(**kwargs)
     return wrapper_view
 
@@ -37,16 +37,17 @@ def login():
             session['su'] = admin.uid
     return jsonify([str(a) for a in Admin.query.all()])
 
-@login_required
 @bp.route('/delete', methods=['POST'])
+@login_required
 def delete_post():
     # extra check
     uid = request.form["uid"]
-    post = Post.query.filter_by(uid=uid).first():
-    board = post.board_alias
-    if [Admin.query.filter_by(uid=g.su).all()] > 0:
+    post = Post.query.filter_by(uid=uid).first()
+    if len([Admin.query.filter_by(uid=g.su).all()]) > 0 and post:
+        pdb.session.delete(post)
         pdb.session.commit()
-    return redirect(url_for('board_paged', board=board))
+        return redirect(url_for('index'))
+    return redirect(url_for('index'))
 
 @bp.route('/logout')
 def logout():

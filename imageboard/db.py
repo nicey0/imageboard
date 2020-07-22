@@ -2,6 +2,7 @@ from flask_sqlalchemy import SQLAlchemy
 import imageboard as i
 
 pdb = SQLAlchemy(i.app)
+pdb.init_app(i.app)
 
 class Admin(pdb.Model):
     uid = pdb.Column(pdb.Integer, primary_key=True, nullable=False)

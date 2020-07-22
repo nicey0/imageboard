@@ -17,7 +17,10 @@ def get_all_boards():
 def get_posts_for_board(alias: str):
     return Post.query.filter_by(board_alias=alias)
 
-@bp.route('/')
+def page_exists(posts):
+    return len(posts)
+
+@bp.route('/', methods=['GET', 'POST'])
 def index():
     return jsonify([str(b) for b in get_all_boards()])
 
@@ -29,8 +32,8 @@ def board_paged(board):
         page = int((lambda x: x if x is not None else 0)(request.args.get('page', None)))
     except ValueError:
         page = 0
-    return jsonify([str(p) for p in get_posts_for_board(board)
-                    [page*PAGE_SIZE:page*PAGE_SIZE+PAGE_SIZE]])
+    posts = get_posts_for_board(board)[page*PAGE_SIZE:page*PAGE_SIZE+PAGE_SIZE]
+    return jsonify([str(p) for p in posts])
 
 @bp.route('/<board>/catalog', methods=['GET', 'POST'])
 def board_catalog(board):
