@@ -18,9 +18,9 @@ from . import boards
 app.register_blueprint(boards.bp)
 app.add_url_rule("/", endpoint="index")
 
-# Auth
-# from . import auth
-# app.register_blueprint(auth.bp)
+# Admins
+from . import su
+app.register_blueprint(su.bp)
 
 # Click commands
 from . import clickcomm as cc
