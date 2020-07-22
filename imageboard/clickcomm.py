@@ -1,7 +1,8 @@
 from . import app
-from .db import Post, Board, pdb
+from .db import pdb, SuperTypes, Super, Board, Post
 import click
 from flask.cli import with_appcontext
+from werkzeug.security import generate_password_hash
 
 @click.command('init-db')
 @with_appcontext
@@ -31,6 +32,16 @@ def init_boards():
         pdb.session.add(Board(alias=lett, name=lett))
     pdb.session.commit()
     click.echo("Initialized boards.")
+
+@click.command('init-admin')
+@click.argument('email', nargs=1)
+@click.argument('password', nargs=2)
+@with_appcontext
+def init_admin(email, password):
+    pdb.session.add(Super(email=email, password=generate_password_hash(password),
+                          rank=SuperTypes.ADMIN))
+    pdb.session.commit()
+    click.echo("Superadmin initialized")
 
 @click.command('help')
 @with_appcontext
