@@ -80,4 +80,4 @@ def logout():
 
 @bp.route('/tmp/logged')
 def is_logged_in():
-    return jsonify(g.su is not None)
+    return jsonify(str(Super.query.filter_by(uid=g.su).first()))
