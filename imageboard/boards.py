@@ -15,7 +15,7 @@ def get_all_boards():
     return Board.query.all()
 
 def get_posts_for_board(alias: str):
-    return Post.query.filter_by(board_alias=alias).order_by(Post.created)
+    return Board.query.filter_by(alias=alias).first().posts.order_by(Post.created)
 
 def page_exists(posts):
     return len(posts)

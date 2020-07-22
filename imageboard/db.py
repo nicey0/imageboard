@@ -29,7 +29,7 @@ class Admin(pdb.Model):
     password = pdb.Column(pdb.String(160), nullable=False)
 
     def __repr__(self):
-        return f"<Admin [{self.email}]>"
+        return f"<Admin [{self.uid} | {self.email}]>"
 
 class Board(pdb.Model):
     alias = pdb.Column(pdb.String(1), primary_key=True, nullable=False)
@@ -37,7 +37,7 @@ class Board(pdb.Model):
     posts = pdb.relationship("Post", backref="board", lazy=True)
 
     def __repr__(self):
-        return f"<Board [{self.name} | {len(self.posts)}]>"
+        return f"<Board [{self.alias}/{self.name} | {len(self.posts)}]>"
 
 class Post(pdb.Model):
     uid = pdb.Column(pdb.Integer, primary_key=True, nullable=False)
@@ -46,4 +46,4 @@ class Post(pdb.Model):
     created = pdb.Column(pdb.DateTime, server_default=utcnow())
 
     def __repr__(self):
-        return f"<Post [/{self.board_alias}/ | {self.body[:80]}]>"
+        return f"<Post [/{self.board_alias}/ | {self.created} | {self.body[:50]}]>"
