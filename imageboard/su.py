@@ -1,6 +1,6 @@
 from flask import Blueprint, g, session, request, redirect, url_for, jsonify
 from functools import wraps
-from .db import pdb, Admin
+from .db import pdb, Admin, Post
 from werkzeug.security import generate_password_hash, check_password_hash
 
 bp = Blueprint('su', __name__, url_prefix='/su')
@@ -8,6 +8,14 @@ bp = Blueprint('su', __name__, url_prefix='/su')
 @bp.before_app_request
 def load_su():
     g.su = session.get('su', None)
+
+def login_required(view):
+    @wraps(view)
+    def wrapper_view(**kwargs):
+        if g.su is None:
+            return redirect(url_for('login'))
+        return view(**kwargs)
+    return wrapper_view
 
 @bp.route('/register', methods=['GET', 'POST'])
 def register():
@@ -29,6 +37,14 @@ def login():
             session['su'] = admin.uid
     return jsonify([str(a) for a in Admin.query.all()])
 
+@login_required
+@bp.route('/delete', methods=['POST'])
+def delete_post():
+    uid = request.form["uid"]
+    for post in Post.query.filter_by(uid=uid).all():
+        pdb.session.delete(post)
+    pdb.session.commit()
+
 @bp.route('/logout')
 def logout():
     session.clear()
@@ -37,11 +53,3 @@ def logout():
 @bp.route('/tmp/logged')
 def is_logged_in():
     return jsonify(g.su is not None)
-
-def login_required(view):
-    @wraps(view)
-    def wrapper_view(**kwargs):
-        if g.su is None:
-            return redirect(url_for('login'))
-        return view(**kwargs)
-    return wrapper_view
