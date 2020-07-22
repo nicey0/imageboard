@@ -4,25 +4,25 @@ import imageboard as i
 pdb = SQLAlchemy(i.app)
 
 class Admin(pdb.Model):
-    uid = pdb.Column(pdb.Integer, primary_key=True)
-    email = pdb.Column(pdb.String(160))
-    password = pdb.Column(pdb.String(160))
+    uid = pdb.Column(pdb.Integer, primary_key=True, nullable=False)
+    email = pdb.Column(pdb.String(160), nullable=False)
+    password = pdb.Column(pdb.String(160), nullable=False)
 
     def __repr__(self):
         return f"<Admin [{self.email}]>"
 
 class Board(pdb.Model):
-    alias = pdb.Column(pdb.String(1), primary_key=True)
-    name = pdb.Column(pdb.String(160))
+    alias = pdb.Column(pdb.String(1), primary_key=True, nullable=False)
+    name = pdb.Column(pdb.String(160), nullable=False)
     posts = pdb.relationship("Post", backref="board", lazy=True)
 
     def __repr__(self):
         return f"<Board [{self.name}]>"
 
 class Post(pdb.Model):
-    uid = pdb.Column(pdb.Integer, primary_key=True)
+    uid = pdb.Column(pdb.Integer, primary_key=True, nullable=False)
     body = pdb.Column(pdb.String(10000), nullable=False)
-    board_alias = pdb.Column(pdb.String(1), pdb.ForeignKey('board.alias'))
+    board_alias = pdb.Column(pdb.String(1), pdb.ForeignKey('board.alias'), nullable=False)
     # board = pdb.relationship('Board')
 
     def __repr__(self):

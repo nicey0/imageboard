@@ -1,16 +1,14 @@
 from flask import Blueprint, render_template, request, redirect, url_for, jsonify
-from datetime import datetime as dt
 from .db import pdb, Post
 
 bp = Blueprint('boards', __name__)
 PAGE_SIZE = 10
 
-def board_addpost(method, form, pdb):
-    if method == 'POST':
-        pdb.session.add(
-            Post(body=form["body"])
-        )
-        pdb.session.commit()
+def board_addpost(form, pdb):
+    pdb.session.add(
+        Post(body=form["body"])
+    )
+    pdb.session.commit()
 
 def get_posts_for_board(alias: str):
     return Post.query.filter_by(board_alias=alias)
@@ -21,7 +19,8 @@ def index():
 
 @bp.route('/<board>/', methods=['GET', 'POST'])
 def board_paged(board):
-    board_addpost(request.method, request.form, pdb)
+    if request.method == 'POST':
+        board_addpost(request.form, pdb)
     try:
         page = int((lambda x: x if x is not None else 0)(request.args.get('page', None)))
     except ValueError:
@@ -31,5 +30,6 @@ def board_paged(board):
 
 @bp.route('/<board>/catalog', methods=['GET', 'POST'])
 def board_catalog(board):
-    board_addpost(request.method, request.form, pdb)
+    if request.method == 'POST':
+        board_addpost(request.form, pdb)
     return jsonify([str(p) for p in get_posts_for_board(board)])

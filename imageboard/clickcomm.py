@@ -36,11 +36,11 @@ def init_boards():
 @with_appcontext
 def click_help():
     click.echo("init-db: Drops and re-initializes all database tables")
-    click.echo("add-test-posts: Adds 5 10-post pages")
     click.echo("init-boards: Deletes and re-initializes all boards")
+    click.echo("add-test-posts: Adds 5 10-post pages")
 
 def add_commands():
     app.cli.add_command(init_db)
-    app.cli.add_command(add_test_posts)
     app.cli.add_command(init_boards)
+    app.cli.add_command(add_test_posts)
     app.cli.add_command(click_help)
