@@ -1,4 +1,4 @@
-from flask import Blueprint, g, session, request, redirect, url_for
+from flask import Blueprint, g, session, request, redirect, url_for, jsonify
 from functools import wraps
 from .db import pdb, Admin
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -17,22 +17,26 @@ def register():
         admin = Admin(email=email, password=generate_password_hash(password))
         pdb.session.add(admin)
         pdb.session.commit()
-    return (str(a) for a in Admin.query.all())
+    return jsonify([str(a) for a in Admin.query.all()])
 
 @bp.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
         email = request.form["email"]
         password = request.form["password"]
-        admin = Admin.query.filter_by(email=email)
+        admin = Admin.query.filter_by(email=email).first()
         if check_password_hash(admin.password, password):
             session['su'] = admin.uid
-    return (str(a) for a in Admin.query.all())
+    return jsonify([str(a) for a in Admin.query.all()])
 
 @bp.route('/logout')
 def logout():
     session.clear()
     return redirect(url_for('index'))
+
+@bp.route('/tmp/logged')
+def is_logged_in():
+    return jsonify(g.su is not None)
 
 def login_required(view):
     @wraps(view)
