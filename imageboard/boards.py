@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for, jsonify
+from flask import Blueprint, render_template, request, redirect, url_for, jsonify, abort
 from .db import pdb, Board, Post
 
 bp = Blueprint('boards', __name__)
@@ -37,9 +37,11 @@ def board_paged(board):
     try:
         page = int((lambda x: x if x is not None else 0)(request.args.get('page', None)))
     except ValueError:
-        page = 0
-    return render_template("boards/board_paged.html", posts=get_posts_for_board(board)
-                           [page*PAGE_SIZE:page*PAGE_SIZE+PAGE_SIZE])
+        abort(404)
+    posts = get_posts_for_board(board)[page*PAGE_SIZE:page*PAGE_SIZE+PAGE_SIZE]
+    if len(posts) == 0:
+        abort(404)
+    return render_template("boards/board_paged.html", posts=posts)
 
 @bp.route('/<board>/catalog', methods=['GET', 'POST'])
 def board_catalog(board):
