@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for, jsonify, abort
+from flask import Blueprint, render_template, request, jsonify, abort
 from .db import pdb, Board, Post
 
 bp = Blueprint('boards', __name__)
