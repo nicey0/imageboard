@@ -57,6 +57,22 @@ article.post {
     min-height: 5rem;
 }
 
+.add-post textarea, .add-post button {
+    border: 1px solid var(--bd-b);
+    background-color: var(--bg-b);
+    padding: 0.25rem;
+    display: block;
+    margin-left: 0.25rem;
+}
+
+.add-post textarea {
+    max-width: 90%;
+}
+
+.add-post button {
+    margin-top: 0.5rem;
+}
+
 .post .left {
     display: flex;
     flex-direction: column;

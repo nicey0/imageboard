@@ -1,10 +1,11 @@
 :root {
     /* Main colors */
     --bg-a: #000;
-    --bg-b: #000;
+    --bg-b: #444;
     --fg-a: #fff;
     --fg-b: #fff;
     --bd-a: #f0f;
+    --bd-b: #a0a;
     /* Other colors */
     --link-a: #0ff;
     --link-b: #0f0;

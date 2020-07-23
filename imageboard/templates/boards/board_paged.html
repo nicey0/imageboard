@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
 {% block body %}
 <main id="board_paged">
+    <form class="add-post" method="post">
+        <textarea name="body" type="text" cols=30 rows=8 required></textarea>
+        <button>Post</button>
+    </form>
     {% for post in posts %}
     <article class="post">
         <section class="left">
