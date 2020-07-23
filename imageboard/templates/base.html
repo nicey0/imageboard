@@ -14,6 +14,8 @@
         {% for board in boards %}
         <a href="{{ url_for('boards.board_paged', board=board['name']) }}">/{{ board["name"] }}/</a>
         {% endfor %}
+        {% block header %}
+        {% endblock header %}
     </header>
     {% block body %}
     {% endblock body %}

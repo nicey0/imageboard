@@ -61,7 +61,7 @@ article.post {
     margin-left: 0.25rem;
 }
 
-.add-post textarea, .add-post button {
+.add-post .file-input, .add-post textarea, .add-post button {
     border: 1px solid var(--bd-b);
     background-color: var(--bg-b);
     padding: 0.25rem;
@@ -69,8 +69,24 @@ article.post {
 }
 
 .add-post textarea {
-    margin: 0.15rem 0 0.75rem 0;
+    margin: 0.15rem 0 0.25rem 0;
     max-width: 90%;
+}
+
+.add-post .file-input {
+    margin: 0 0 0.75rem 0;
+    padding: 0.25rem 1.25rem;
+    display: inline-block;
+}
+
+.add-post input[type="file"] {
+    position: absolute;
+    z-index: -1;
+    left: 1.3rem;
+}
+
+.add-post button {
+    padding: 0.25rem 0.75rem;
 }
 
 .post .left {

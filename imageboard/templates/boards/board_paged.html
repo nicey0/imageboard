@@ -4,6 +4,8 @@
     <form class="add-post" method="post">
         <p>Add post</p>
         <textarea name="body" type="text" cols=30 rows=8 required></textarea>
+        <label class="file-input" for="file">Upload file</label>
+        <input id="file" name="file" type="file">
         <button>Post</button>
     </form>
     {% for post in posts %}

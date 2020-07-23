@@ -10,7 +10,6 @@ def board_addpost(form, board, pdb):
     pdb.session.add(
         Post(body=form["body"], board_alias=alias)
     )
-    pdb.session.commit()
 
 def get_all_boards():
     return Board.query.all()
@@ -31,6 +30,8 @@ def index():
 def board_paged(board):
     if request.method == 'POST':
         board_addpost(request.form, board, pdb)
+        print(request.files)
+        # pdb.session.commit()
     try:
         page = int((lambda x: x if x is not None else 0)(request.args.get('page', None)))
     except ValueError:
@@ -44,4 +45,5 @@ def board_paged(board):
 def board_catalog(board):
     if request.method == 'POST':
         board_addpost(request.form, board, pdb)
+        # pdb.session.commit()
     return jsonify([str(p) for p in get_posts_for_board(board)])
