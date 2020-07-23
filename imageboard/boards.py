@@ -30,8 +30,9 @@ def index():
 def board_paged(board):
     if request.method == 'POST':
         board_addpost(request.form, board, pdb)
-        print(request.files)
-        # pdb.session.commit()
+        if len(request.files) > 0:
+            pass
+        pdb.session.commit()
     try:
         page = int((lambda x: x if x is not None else 0)(request.args.get('page', None)))
     except ValueError:

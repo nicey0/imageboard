@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 {% block body %}
 <main id="board_paged">
-    <form class="add-post" method="post">
+    <form class="add-post" method="post" enctype="multipart/form-data">
         <p>Add post</p>
         <textarea name="body" type="text" cols=30 rows=8 required></textarea>
-        <label class="file-input" for="file">Upload file</label>
-        <input id="file" name="file" type="file">
+        <label class="file-input" for="file-in">Upload file</label>
+        <input id="file-in" name="file-in" type="file">
         <button>Post</button>
     </form>
     {% for post in posts %}
