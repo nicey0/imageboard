@@ -38,7 +38,7 @@ def board_paged(board):
         page = int((lambda x: x if x is not None else 0)(request.args.get('page', None)))
     except ValueError:
         page = 0
-    return render_template("boards/index.html", posts=get_posts_for_board(board)
+    return render_template("boards/board_paged.html", posts=get_posts_for_board(board)
                            [page*PAGE_SIZE:page*PAGE_SIZE+PAGE_SIZE])
 
 @bp.route('/<board>/catalog', methods=['GET', 'POST'])

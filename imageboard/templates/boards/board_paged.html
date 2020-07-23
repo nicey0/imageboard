@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block body %}
-<main>
-    {% for board in boards %}
+<main id="board_paged">
+    {% for post in posts %}
     <article class="post">
         <section class="left">
             <span>File balblabaablballabl</span>
@@ -9,7 +9,7 @@
         </section>
         <section class="right">
             <span>headerheader</span>
-            <p>{{ board["name"] }}</p>
+            <p>{{ post["body"] }}</p>
         </section>
     </article>
     {% endfor %}

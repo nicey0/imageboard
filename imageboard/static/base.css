@@ -2,9 +2,10 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    font-size: 14pt;
 }
 
-main {
+main#board_paged {
     padding: 0 5px;
 }
 
@@ -44,6 +45,29 @@ article.post {
     flex-direction: column;
 }
 
+.post .right span {
+    font-weight: bold;
+}
+
 .post .right p {
     margin-left: 5px;
+}
+
+#index header {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+#index header a {
+    margin: 0 5px;
+}
+
+#index section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
