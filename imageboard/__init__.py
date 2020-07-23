@@ -7,10 +7,12 @@ class Production:
     SECRET_KEY = "TODO"
     SQLALCHEMY_DATABASE_URI = puri
     SQLALCHEMY_TRACK_MODIFICATIONS = True
+    UPLOAD_FOLDER = "imageboard/POSTS/PRODUCTION"
 class Development:
     SECRET_KEY = "dev"
     SQLALCHEMY_DATABASE_URI = puri
     SQLALCHEMY_TRACK_MODIFICATIONS = True
+    UPLOAD_FOLDER = "imageboard/POSTS/DEVELOPMENT"
 app.config.from_object(Development())
 
 # Board

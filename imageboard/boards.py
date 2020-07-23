@@ -1,15 +1,26 @@
 from flask import Blueprint, render_template, request, jsonify, abort
+from werkzeug.utils import secure_filename
+from imageboard import app
 from .db import pdb, Board, Post
+import os
 
 bp = Blueprint('boards', __name__)
 PAGE_SIZE = 10
 POST_LIMIT = 150
+EXTENSIONS = {'jpg', 'jpeg', 'png', 'gif', 'webm'}
 
-def board_addpost(form, board, pdb):
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in EXTENSIONS
+
+def board_addpost(form, files, board, pdb):
     alias = Board.query.filter_by(alias=board).first().alias
     pdb.session.add(
         Post(body=form["body"], board_alias=alias)
     )
+    file = files.get('file-in', None)
+    if file and file != '' and allowed_file(file.filename):
+        filename = secure_filename(file.filename)
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
 def get_all_boards():
     return Board.query.all()
@@ -29,9 +40,7 @@ def index():
 @bp.route('/<board>/', methods=['GET', 'POST'])
 def board_paged(board):
     if request.method == 'POST':
-        board_addpost(request.form, board, pdb)
-        if len(request.files) > 0:
-            pass
+        board_addpost(request.form, request.files, board, pdb)
         pdb.session.commit()
     try:
         page = int((lambda x: x if x is not None else 0)(request.args.get('page', None)))
