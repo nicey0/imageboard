@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block body %}
+<main>
+    {% for board in boards %}
+    <article class="post">
+        <section class="left">
+            <span>File balblabaablballabl</span>
+            <img src="" alt="IMAGE_GOES_HERE">
+        </section>
+        <section class="right">
+            <span>headerheader</span>
+            <p>{{ board["name"] }}</p>
+        </section>
+    </article>
+    {% endfor %}
+</main>
+{% endblock body %}
+

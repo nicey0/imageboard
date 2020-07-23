@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block body %}
+<main>
+    {% for board in boards %}
+    <article class="board">
+        <span>headerheader</span>
+        <p>{{ board["name"] }}</p>
+    </article>
+    {% endfor %}
+</main>
+{% endblock body %}
+
