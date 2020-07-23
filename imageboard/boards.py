@@ -23,9 +23,6 @@ def get_posts_for_board(alias: str):
         pdb.session.commit()
     return posts
 
-def page_exists(posts):
-    return len(posts) > 0
-
 @bp.route('/', methods=['GET', 'POST'])
 def index():
     return render_template("boards/index.html", boards=get_all_boards())
