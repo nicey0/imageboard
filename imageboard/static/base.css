@@ -3,6 +3,23 @@
     margin: 0;
     padding: 0;
     font-size: 14pt;
+    color: var(--fg-a);
+}
+
+body {
+    height: 100%;
+    width: 100%;
+    padding-bottom: 1.5rem;
+    background-color: var(--bg-a);
+}
+
+a {
+    color: var(--link-a);
+    text-decoration: none;
+}
+
+a.alt {
+    color: var(--link-b);
 }
 
 main#board_paged {
@@ -15,6 +32,20 @@ main .search {
     align-items: center;
     border-top: 1px solid var(--bd-a);
     border-bottom: 1px solid var(--bd-a);
+}
+
+header {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid var(--bd-a);
+}
+
+header a {
+    margin: 0 5px;
 }
 
 article.post {
@@ -51,19 +82,6 @@ article.post {
 
 .post .right p {
     margin-left: 5px;
-}
-
-#index header {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    justify-content: center;
-    padding: 0.5rem;
-    margin-bottom: 1rem;
-}
-
-#index header a {
-    margin: 0 5px;
 }
 
 #index section {

@@ -1,14 +1,9 @@
 {% extends 'base.html' %}
 {% block body %}
 <main id="index">
-    <header>
-        {% for board in boards %}
-        <a href="{{ url_for('boards.board_paged', board=board['name']) }}">/{{ board["name"] }}/</a>
-        {% endfor %}
-    </header>
     <section>
         <h1>Welcome to TestChan!</h1>
-        <p><a href="https://github.com/nicey0/imageboard">This website</a> was made with the intent of learning and for <a href="https://github.com/nicey0/">my</a> resume. It will never be deployed, at least by me, and development will cease after it's initially completed.</p>
+        <p><a class="alt" href="https://github.com/nicey0/imageboard">This website</a> was made with the intent of learning and for <a class="alt" href="https://github.com/nicey0/">my</a> resume. It will never be deployed, at least by me, and development will cease after it's initially completed.</p>
     </section>
 </main>
 {% endblock body %}

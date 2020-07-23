@@ -2,10 +2,10 @@
     /* Main colors */
     --bg-a: #000;
     --bg-b: #000;
-    --fg-a: #000;
-    --fg-b: #000;
-    --bd-a: #000;
+    --fg-a: #fff;
+    --fg-b: #fff;
+    --bd-a: #f0f;
     /* Other colors */
-    --link-a: #000;
-    --link-b: #000;
+    --link-a: #0ff;
+    --link-b: #0f0;
 }

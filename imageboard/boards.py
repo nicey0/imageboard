@@ -38,7 +38,7 @@ def board_paged(board):
     posts = get_posts_for_board(board)[page*PAGE_SIZE:page*PAGE_SIZE+PAGE_SIZE]
     if len(posts) == 0:
         abort(404)
-    return render_template("boards/board_paged.html", posts=posts)
+    return render_template("boards/board_paged.html", posts=posts, boards=get_all_boards())
 
 @bp.route('/<board>/catalog', methods=['GET', 'POST'])
 def board_catalog(board):
