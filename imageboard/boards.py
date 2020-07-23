@@ -16,7 +16,7 @@ def get_all_boards():
     return Board.query.all()
 
 def get_posts_for_board(alias: str):
-    posts = Post.query.filter_by(board_alias=alias).order_by(Post.created.asc()).all()
+    posts = Post.query.filter_by(board_alias=alias).order_by(Post.created.desc()).all()
     if len(posts) > POST_LIMIT:
         for post in posts[POST_LIMIT:]:
             pdb.session.delete(post)
