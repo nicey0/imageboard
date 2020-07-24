@@ -6,7 +6,7 @@ from imageboard import app
 
 PAGE_SIZE = 10
 POST_LIMIT = 150
-EXTENSIONS = {'image': {'jpg', 'jpeg', 'png', 'gif'}, 'video': {'webm'}}
+EXTENSIONS = {'image': {'jpg', 'jpeg', 'png', 'gif'}, 'video': {'mp4', 'webm'}}
 
 def get_all_boards():
     return Board.query.all()
