@@ -1,6 +1,6 @@
 from . import app
 from .db import pdb, SuperTypes, Super, Board, Post
-from .util import board_addpost
+from .util import board_addpost, clear_post_files
 import click
 from flask.cli import with_appcontext
 from werkzeug.security import generate_password_hash
@@ -10,6 +10,7 @@ from werkzeug.security import generate_password_hash
 def init_db():
     pdb.drop_all()
     pdb.create_all()
+    clear_post_files()
     click.echo("Initialized database.")
 
 @click.command('init-admin')
@@ -25,7 +26,6 @@ def init_admin(email, password):
 @click.command('init-boards')
 @with_appcontext
 def init_boards():
-    [pdb.session.delete(b) for b in Board.query.all()]
     for lett in 'abcdefghijklmnopqrstuvwxyz':
         pdb.session.add(Board(alias=lett, name=lett))
     pdb.session.commit()
@@ -34,7 +34,6 @@ def init_boards():
 @click.command('add-test-posts')
 @with_appcontext
 def add_test_posts():
-    [pdb.session.delete(p) for p in Post.query.all()]
     boards = 'abcdefghijklmnopqrstuvwxyz'
     for alias in boards:
         board = Board.query.filter_by(alias=alias).first()

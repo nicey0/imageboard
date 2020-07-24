@@ -1,6 +1,6 @@
 from .db import pdb, Board, Post, UIDOrigin, Response
 from werkzeug.utils import secure_filename
-from os import path
+from os import path, remove, walk
 from hashlib import md5
 from imageboard import app
 
@@ -14,13 +14,24 @@ def get_all_boards():
 def get_page(args):
     return int((lambda x: x if x is not None else 0)(args.get('page', None)))
 
+def delete_post(post):
+    pdb.session.delete(post)
+    if post.filename and post.filetype:
+        print(post.body, post.uid, post.filetype)
+        print("Removing", app.config['UPLOAD_FOLDER']+'/'+post.uid+'.'+post.filetype)
+        remove(app.config['UPLOAD_FOLDER']+'/'+post.uid+'.'+post.filetype)
+
+def clear_post_files():
+    for (_, _, fs) in walk(app.config['UPLOAD_FOLDER']):
+        [remove(app.config['UPLOAD_FOLDER']+'/'+file) for file in fs]
+
 def get_posts_for_board(alias: str, page: int=-1):
     posts = Post.query.filter_by(board_alias=alias).order_by(Post.created.desc()).all()
     if page > -1:
         posts = posts[page*PAGE_SIZE:page*PAGE_SIZE+PAGE_SIZE]
     if len(posts) > POST_LIMIT:
         for post in posts[POST_LIMIT:]:
-            pdb.session.delete(post)
+            delete_post(post)
         pdb.session.commit()
     return posts
 
