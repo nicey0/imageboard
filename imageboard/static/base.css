@@ -58,6 +58,7 @@ header a {
     background-color: var(--bg-b);
     padding: 0.25rem;
     display: block;
+    font-weight: normal;
 }
 
 .add-post textarea {
@@ -90,7 +91,7 @@ header a {
 }
 
 .post span {
-    font-size: 0.85rem;
+    font-size: 0.75rem;
 }
 
 .post .left {
@@ -101,6 +102,7 @@ header a {
 }
 
 .post .left img {
+    min-width: 10%;
     max-width: 100%;
 }
 
