@@ -2,17 +2,18 @@ from flask import Flask
 
 app = Flask(__name__)
 puri = "postgresql://localhost:5432/imageboard"
+upload = 'imageboard/static/POSTS/'
 
 class Production:
     SECRET_KEY = "TODO"
     SQLALCHEMY_DATABASE_URI = puri
     SQLALCHEMY_TRACK_MODIFICATIONS = True
-    UPLOAD_FOLDER = "imageboard/POSTS/PRODUCTION"
+    UPLOAD_FOLDER = upload + 'PRODUCTION'
 class Development:
     SECRET_KEY = "dev"
     SQLALCHEMY_DATABASE_URI = puri
     SQLALCHEMY_TRACK_MODIFICATIONS = True
-    UPLOAD_FOLDER = "imageboard/POSTS/DEVELOPMENT"
+    UPLOAD_FOLDER = upload + 'DEVELOPMENT'
 app.config.from_object(Development())
 
 # Board

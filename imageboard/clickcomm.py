@@ -1,5 +1,6 @@
 from . import app
 from .db import pdb, SuperTypes, Super, Board, Post
+from .boards import board_addpost
 import click
 from flask.cli import with_appcontext
 from werkzeug.security import generate_password_hash
@@ -39,7 +40,7 @@ def add_test_posts():
         board = Board.query.filter_by(alias=alias).first()
         for i in range(5):
             for k in range(10):
-                pdb.session.add(Post(body=f"post{i}-{k}", board_alias=board.alias))
+                board_addpost({"body": f"post[/{board.alias}/ page{i}:post_n{k}]"}, dict(), board.alias, pdb)
     pdb.session.commit()
     click.echo("5 pages added (10 posts each) for each board (/a/ to /z/)")
 
