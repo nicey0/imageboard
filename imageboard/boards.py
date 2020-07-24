@@ -9,19 +9,6 @@ PAGE_SIZE = 10
 POST_LIMIT = 150
 EXTENSIONS = {'jpg', 'jpeg', 'png', 'gif', 'webm'}
 
-def allowed_file(filename):
-    return '.' in filename and filename.rsplit('.', 1)[1].lower() in EXTENSIONS
-
-def board_addpost(form, files, board, pdb):
-    alias = Board.query.filter_by(alias=board).first().alias
-    pdb.session.add(
-        Post(body=form["body"], board_alias=alias)
-    )
-    file = files.get('file-in', None)
-    if file and file != '' and allowed_file(file.filename):
-        filename = secure_filename(file.filename)
-        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-
 def get_all_boards():
     return Board.query.all()
 
@@ -32,6 +19,19 @@ def get_posts_for_board(alias: str):
             pdb.session.delete(post)
         pdb.session.commit()
     return posts
+
+def allowed_file(filename):
+    return '.' in filename and filename.split('.')[-1].lower() in EXTENSIONS
+
+def board_addpost(form, files, board, pdb):
+    alias = Board.query.filter_by(alias=board).first().alias
+    file = files.get('file-in', None)
+    if file and file != '' and allowed_file(file.filename):
+        filename = secure_filename(file.filename)
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+    pdb.session.add(
+        Post(body=form["body"], board_alias=alias, filename=filename, filetype=file.mimetype.split('/')[-1])
+    )
 
 @bp.route('/', methods=['GET', 'POST'])
 def index():
@@ -55,5 +55,5 @@ def board_paged(board):
 def board_catalog(board):
     if request.method == 'POST':
         board_addpost(request.form, board, pdb)
-        # pdb.session.commit()
+        pdb.session.commit()
     return jsonify([str(p) for p in get_posts_for_board(board)])

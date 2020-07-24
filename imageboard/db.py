@@ -46,8 +46,22 @@ class Board(pdb.Model):
 class Post(pdb.Model):
     uid = pdb.Column(pdb.Integer, primary_key=True, nullable=False)
     body = pdb.Column(pdb.String(10000), nullable=False)
+    filename = pdb.Column(pdb.String(3000), nullable=True)
+    filetype = pdb.Column(pdb.String(3), nullable=True)
+    responses = pdb.relationship("Response", backref="post", lazy=True)
     board_alias = pdb.Column(pdb.String(1), pdb.ForeignKey('board.alias'), nullable=False)
     created = pdb.Column(pdb.DateTime, server_default=utcnow())
 
     def __repr__(self):
         return f"<{self.__class__.__name__} [/{self.board_alias}/ | {self.created} | {self.body[:50]}]>"
+
+class Response(pdb.Model):
+    uid = pdb.Column(pdb.Integer, primary_key=True, nullable=False)
+    body = pdb.Column(pdb.String(10000), nullable=False)
+    filename = pdb.Column(pdb.String(3000), nullable=True)
+    filetype = pdb.Column(pdb.String(3), nullable=True)
+    post_uid = pdb.Column(pdb.Integer, pdb.ForeignKey('post.uid'), nullable=False)
+    created = pdb.Column(pdb.DateTime, server_default=utcnow())
+
+    def __repr__(self):
+        return f"<{self.__class__.__name__} [{self.post_uid} | {self.created} | {self.body[:50]}]>"
