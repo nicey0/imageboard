@@ -6,7 +6,7 @@ from imageboard import app
 
 PAGE_SIZE = 10
 POST_LIMIT = 150
-EXTENSIONS = {'jpg', 'jpeg', 'png', 'gif', 'webm'}
+EXTENSIONS = {'image': {'jpg', 'jpeg', 'png'}, 'gif': {'gif'}, 'video': {'webm'}}
 
 def get_all_boards():
     return Board.query.all()
@@ -36,7 +36,13 @@ def get_posts_for_board(alias: str, page: int=-1):
     return posts
 
 def allowed_file(filename):
-    return '.' in filename and filename.split('.')[-1].lower() in EXTENSIONS
+    return '.' in filename and filename.split('.')[-1].lower() in set().union(*EXTENSIONS.values())
+
+def get_filetype_type(post):
+    try:
+        return list(filter(lambda k: post.filetype in EXTENSIONS[k], EXTENSIONS))[0]
+    except IndexError:
+        return ''
 
 def get_uid():
     pdb.session.add(UIDOrigin())

@@ -8,16 +8,16 @@
         <input id="file-in" name="file-in" type="file">
         <button>Post</button>
     </form>
-    {% for post in posts %}
+    {% for ftt, post in posts %}
     <article class="post">
         {% if post.filename %}
             <section class="left">
                 <span>{{ post.filename }}</span>
-                {% if post.filetype in ['png', 'jpg', 'jpeg', 'gif'] %}
+                {% if ftt == 'image' %}
                     <img src="{{ url_for('static', filename='POSTS/DEVELOPMENT/'+post.uid+'.'+
                          post.filetype) }}"
                  alt="IMAGE_GOES_HERE">
-                {% else %}
+                {% elif ftt == 'video' %}
                     <video controls>
                         <source src="{{ url_for('static', filename='POSTS/DEVELOPMENT/'+post.uid+'.'+post.filetype) }}" type="video/{{ post.filetype }}">
                     </video>
