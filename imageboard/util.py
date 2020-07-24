@@ -14,17 +14,6 @@ def get_all_boards():
 def get_page(args):
     return int((lambda x: x if x is not None else 0)(args.get('page', None)))
 
-def delete_post(post):
-    pdb.session.delete(post)
-    if post.filename and post.filetype:
-        print(post.body, post.uid, post.filetype)
-        print("Removing", app.config['UPLOAD_FOLDER']+'/'+post.uid+'.'+post.filetype)
-        remove(app.config['UPLOAD_FOLDER']+'/'+post.uid+'.'+post.filetype)
-
-def clear_post_files():
-    for (_, _, fs) in walk(app.config['UPLOAD_FOLDER']):
-        [remove(app.config['UPLOAD_FOLDER']+'/'+file) for file in fs]
-
 def get_posts_for_board(alias: str, page: int=-1):
     posts = Post.query.filter_by(board_alias=alias).order_by(Post.created.desc()).all()
     if page > -1:
@@ -63,3 +52,14 @@ def board_addpost(form, files, board):
         Post(uid=uid, body=form["body"], board_alias=alias, filename=filename, filetype=filetype)
     )
     pdb.session.commit()
+
+def delete_post(post):
+    pdb.session.delete(post)
+    if post.filename and post.filetype:
+        print(post.body, post.uid, post.filetype)
+        print("Removing", app.config['UPLOAD_FOLDER']+'/'+post.uid+'.'+post.filetype)
+        remove(app.config['UPLOAD_FOLDER']+'/'+post.uid+'.'+post.filetype)
+
+def clear_post_files():
+    for (_, _, fs) in walk(app.config['UPLOAD_FOLDER']):
+        [remove(app.config['UPLOAD_FOLDER']+'/'+file) for file in fs]

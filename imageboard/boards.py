@@ -25,4 +25,5 @@ def board_paged(board):
 def board_catalog(board):
     if request.method == 'POST':
         board_addpost(request.form, board)
-    return jsonify([str(p) for p in get_posts_for_board(board)])
+    posts = [(get_filetype_type(post), post) for post in get_posts_for_board(board)]
+    return render_template('boards/board_catalog.html', posts=posts, boards=get_all_boards())

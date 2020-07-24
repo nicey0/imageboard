@@ -2,7 +2,7 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-size: 14pt;
+    font-size: 11pt;
     color: var(--fg-a);
 }
 
@@ -68,7 +68,7 @@ header a {
 
 .add-post .file-input {
     margin: 0 0 0.75rem 0;
-    padding: 0.25rem 1.25rem;
+    padding: 4px 1.56rem;
     display: inline-block;
 }
 
@@ -82,7 +82,7 @@ header a {
     padding: 0.25rem 0.75rem;
 }
 
-.post {
+#board_paged .post {
     display: flex;
     flex-direction: row;
     padding: 0.5rem 0 0.5rem 1rem;
@@ -90,34 +90,59 @@ header a {
     min-height: 5rem;
 }
 
-.post span {
+#board_paged .post span {
     font-size: 0.75rem;
 }
 
-.post .left {
+#board_paged .post .left {
     display: inline-flex;
     flex-direction: column;
     margin-right: 0.5rem;
     max-width: 15%;
 }
 
-.post .left img, .post .left video {
+#board_paged .post .left img,  .post .left video {
     min-width: 10%;
     max-width: 100%;
 }
 
-.post .left span {
+#board_paged .post .left span {
     word-break: break-word;
     margin-bottom: 0.2rem;
 }
 
-.post .right {
+#board_paged .post .right {
     display: flex;
     flex-direction: column;
 }
 
-.post .right p {
+#board_paged .post .right p {
     word-break: break-word;
+}
+
+#board_catalog {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    align-content: flex-start;
+}
+
+#board_catalog .post {
+    width: 20%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    border: 1px solid var(--bd-a);
+    padding: 1rem;
+    margin: 1rem;
+}
+
+#board_catalog .post img, #board_catalog .post video {
+    max-width: 100%;
+    margin-bottom: 5px;
 }
 
 #index section {
