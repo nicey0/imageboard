@@ -34,14 +34,15 @@ def get_uid():
     return md5(bytes(uid.origin)).hexdigest()[:32]
 
 def board_addpost(form, files, board):
+    uid = get_uid()
     alias = Board.query.filter_by(alias=board).first().alias
     file = files.get('file-in', None)
     filename = filetype = None
     if file and file != '' and allowed_file(file.filename):
         filename = secure_filename(file.filename)
         filetype = file.mimetype.split('/')[1]
-        file.save(path.join(app.config['UPLOAD_FOLDER'], filename))
+        file.save(path.join(app.config['UPLOAD_FOLDER'], uid+'.'+filetype))
     pdb.session.add(
-        Post(uid=get_uid(), body=form["body"], board_alias=alias, filename=filename, filetype=filetype)
+        Post(uid=uid, body=form["body"], board_alias=alias, filename=filename, filetype=filetype)
     )
     pdb.session.commit()
