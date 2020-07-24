@@ -18,7 +18,7 @@
                          post.filetype) }}"
                  alt="IMAGE_GOES_HERE">
                 {% else %}
-                    <video height="100%" width="100%" controls>
+                    <video controls>
                         <source src="{{ url_for('static', filename='POSTS/DEVELOPMENT/'+post.uid+'.'+post.filetype) }}" type="video/{{ post.filetype }}">
                     </video>
                 {% endif %}

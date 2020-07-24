@@ -101,7 +101,7 @@ header a {
     max-width: 15%;
 }
 
-.post .left img {
+.post .left img, .post .left video {
     min-width: 10%;
     max-width: 100%;
 }
