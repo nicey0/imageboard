@@ -37,9 +37,8 @@ def add_test_posts():
     boards = 'abcdefghijklmnopqrstuvwxyz'
     for alias in boards:
         board = Board.query.filter_by(alias=alias).first()
-        for i in range(5):
-            for k in range(10):
-                board_addpost({"body": f"post[/{board.alias}/ page{i}:post_n{k}]"}, dict(), board.alias)
+        for k in range(50):
+            board_addpost({"body": f"post[/{board.alias}/ post_n{k}]"}, dict(), board.alias)
     pdb.session.commit()
     click.echo("5 pages added (10 posts each) for each board (/a/ to /z/)")
 

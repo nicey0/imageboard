@@ -1,12 +1,14 @@
 :root {
     /* Main colors */
-    --bg-a: #000;
+    --bg-a: #CAC4B8;
     --bg-b: #444;
-    --fg-a: #fff;
-    --fg-b: #fff;
-    --bd-a: #f0f;
-    --bd-b: #a0a;
+    --black: #000;
+    --white: #fff;
+    --fg-a: #86120D;
+    --fg-b: #FFBFBD;
+    --bd-a: #931B15;
     /* Other colors */
-    --link-a: #0ff;
-    --link-b: #0f0;
+    --link-a: #8F1A14;
+    --link-b: #BF174A;
+    --stb: #500;
 }

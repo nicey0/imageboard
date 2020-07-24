@@ -4,6 +4,10 @@
     padding: 0;
     font-size: 11pt;
     color: var(--fg-a);
+
+    /* Scrollbar */
+    scrollbar-width: thin;
+    scrollbar-color: var(--stb) var(--bg-a);
 }
 
 body {
@@ -18,12 +22,20 @@ a {
     text-decoration: none;
 }
 
+a:hover {
+    text-decoration: underline;
+}
+
 a.alt {
     color: var(--link-b);
 }
 
+label[for="file-in"]:hover, button:hover {
+    filter: brightness(120%);
+}
+
 main#board_paged {
-    padding: 0 5px;
+    padding: 0 5px 0 1rem;
 }
 
 main .search {
@@ -35,34 +47,49 @@ main .search {
 }
 
 header {
+    margin-bottom: 1rem;
+}
+
+header > * {
+    padding: 0.5rem;
+}
+
+header #boards {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     align-items: flex-start;
-    justify-content: center;
-    padding: 0.5rem;
-    margin-bottom: 1rem;
     border-bottom: 1px solid var(--bd-a);
 }
 
-header a {
+header #boards a {
     margin: 0 5px;
+}
+
+header #catalog_view {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border-bottom: 1px solid var(--bd-a);
 }
 
 .add-post {
     margin-left: 0.25rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--bd-a);
 }
 
 .add-post .file-input, .add-post textarea, .add-post button {
-    border: 1px solid var(--bd-b);
+    border: 1px solid var(--bd-a);
     background-color: var(--bg-b);
     padding: 0.25rem;
     display: block;
     font-weight: normal;
+    color: var(--fg-b);
 }
 
 .add-post textarea {
-    margin: 0.15rem 0 0.25rem 0;
+    margin: 0.15rem 0 5px 0;
     max-width: 90%;
 }
 
@@ -75,7 +102,7 @@ header a {
 .add-post input[type="file"] {
     position: absolute;
     z-index: -1;
-    left: 1.3rem;
+    left: 1.9rem;
 }
 
 .add-post button {
@@ -85,7 +112,7 @@ header a {
 #board_paged .post {
     display: flex;
     flex-direction: row;
-    padding: 0.5rem 0 0.5rem 1rem;
+    padding: 0.5rem 0 2rem 1rem;
     border-bottom: 1px solid var(--bd-a);
     min-height: 5rem;
 }
@@ -117,6 +144,7 @@ header a {
 }
 
 #board_paged .post .right p {
+    color: var(--black);
     word-break: break-word;
 }
 
@@ -143,6 +171,10 @@ header a {
 #board_catalog .post img, #board_catalog .post video {
     max-width: 100%;
     margin-bottom: 5px;
+}
+
+#board_catalog .post span {
+    color: var(--black);
 }
 
 #index section {
