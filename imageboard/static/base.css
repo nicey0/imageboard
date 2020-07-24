@@ -49,14 +49,6 @@ header a {
     margin: 0 5px;
 }
 
-article.post {
-    display: flex;
-    flex-direction: row;
-    padding: 0.5rem 0;
-    border-bottom: 1px solid var(--bd-a);
-    min-height: 5rem;
-}
-
 .add-post {
     margin-left: 0.25rem;
 }
@@ -89,19 +81,32 @@ article.post {
     padding: 0.25rem 0.75rem;
 }
 
-.post .left {
+.post {
     display: flex;
+    flex-direction: row;
+    padding: 0.5rem 0 0.5rem 1rem;
+    border-bottom: 1px solid var(--bd-a);
+    min-height: 5rem;
+}
+
+.post span {
+    font-size: 0.85rem;
+}
+
+.post .left {
+    display: inline-flex;
     flex-direction: column;
-    margin-right: 1rem;
+    margin-right: 0.5rem;
+    max-width: 15%;
 }
 
 .post .left img {
-    max-width: 15%;
-    margin-left: 1rem;
+    max-width: 100%;
 }
 
-.post .left p {
+.post .left span {
     word-break: break-word;
+    margin-bottom: 0.2rem;
 }
 
 .post .right {
@@ -109,12 +114,8 @@ article.post {
     flex-direction: column;
 }
 
-.post .right span {
-    font-weight: bold;
-}
-
 .post .right p {
-    margin-left: 5px;
+    word-break: break-word;
 }
 
 #index section {

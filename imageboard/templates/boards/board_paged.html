@@ -10,12 +10,15 @@
     </form>
     {% for post in posts %}
     <article class="post">
-        <section class="left">
-            <span>File balblabaablballabl</span>
-            <img src="" alt="IMAGE_GOES_HERE">
-        </section>
+        {% if post.filename %}
+            <section class="left">
+                <span>{{ post.filename }}</span>
+                <img src="{{ url_for('static', filename='POSTS/DEVELOPMENT/'+post.filename) }}"
+                 alt="IMAGE_GOES_HERE">
+            </section>
+        {% endif %}
         <section class="right">
-            <span>headerheader</span>
+            <span>{{ post["uid"] }}</span>
             <p>{{ post["body"] }}</p>
         </section>
     </article>
