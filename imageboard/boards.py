@@ -16,7 +16,7 @@ def board_paged(board):
     except ValueError:
         abort(404)
     posts = get_posts_for_board(board, page=page)
-    if len(posts) == 0:
+    if page != 0 and len(posts) == 0:
         abort(404)
     return render_template("boards/board_paged.html", posts=posts, boards=get_all_boards())
 
