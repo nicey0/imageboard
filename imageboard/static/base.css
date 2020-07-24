@@ -133,7 +133,7 @@ header #catalog_view {
     max-width: 100%;
 }
 
-#board_paged .post .left span {
+#board_paged .post .left a {
     word-break: break-word;
     margin-bottom: 0.2rem;
 }

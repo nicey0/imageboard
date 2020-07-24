@@ -17,7 +17,7 @@
     <article class="post">
         {% if post.filename %}
             <section class="left">
-                <span>{{ post.filename }}</span>
+                <a href="{{ url_for('static', filename='POSTS/DEVELOPMENT/'+post.uid+'.'+post.filetype) }}">{{ post.filename }}</a>
                 {% if ftt == 'image' %}
                     <img src="{{ url_for('static', filename='POSTS/DEVELOPMENT/'+post.uid+'.'+
                          post.filetype) }}"
