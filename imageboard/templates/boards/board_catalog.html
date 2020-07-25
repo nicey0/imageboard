@@ -15,6 +15,7 @@
                 </video>
             {% endif %}
         {% endif %}
+        <span><b>R:</b> {{ post["responses"]|length }}</span>
         <span>{{ post["body"] }}</span>
     </article>
     {% endfor %}
