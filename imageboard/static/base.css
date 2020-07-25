@@ -109,16 +109,34 @@ header #catalog_view {
     padding: 0.25rem 0.75rem;
 }
 
+#board_paged .thread {
+    border-bottom: 1px solid var(--bd-a);
+}
+
+#board_paged .left a {
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 0.2rem;
+}
+
+#board_paged .right {
+    display: flex;
+    flex-direction: column;
+    max-width: 40%;
+}
+
+#board_paged .right label {
+    font-size: 0.75rem;
+    cursor: text;
+}
+
 #board_paged .post {
     display: flex;
     flex-direction: row;
-    padding: 0.5rem 0 2rem 1rem;
-    border-bottom: 1px solid var(--bd-a);
+    padding: 0.5rem 0 1rem 1rem;
     min-height: 5rem;
-}
-
-#board_paged .post span {
-    font-size: 0.75rem;
 }
 
 #board_paged .post .left {
@@ -133,19 +151,40 @@ header #catalog_view {
     max-width: 100%;
 }
 
-#board_paged .post .left a {
+#board_paged .post .right p {
+    color: var(--black);
     word-break: break-word;
-    margin-bottom: 0.2rem;
 }
 
-#board_paged .post .right {
+#board_paged .response {
+    display: flex;
+    flex-direction: row;
+    padding: 0.5rem 0 2rem 1rem;
+    border-bottom: 1px solid var(--bd-a);
+    min-height: 5rem;
+}
+
+#board_paged .response .left {
+    display: inline-flex;
+    flex-direction: column;
+    margin-right: 0.5rem;
+    max-width: 12.5%;
+}
+
+#board_paged .response .left img,  .response .left video {
+    min-width: 10%;
+    max-width: 100%;
+}
+
+#board_paged .response .right {
     display: flex;
     flex-direction: column;
 }
 
-#board_paged .post .right p {
+#board_paged .response .right p {
     color: var(--black);
     word-break: break-word;
+    font-size: 0.95rem;
 }
 
 #board_catalog {
