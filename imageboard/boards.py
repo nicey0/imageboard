@@ -1,5 +1,6 @@
-from flask import Blueprint, render_template, request, jsonify, abort, url_for
-from .util import (get_all_boards, board_addpost, get_posts_for_board, get_page, get_filetype_type)
+from flask import Blueprint, render_template, request, jsonify, abort, redirect, url_for
+from .util import (get_all_boards, board_addpost, board_addreply, get_posts_for_board,
+                   get_page, get_filetype_type)
 
 bp = Blueprint('boards', __name__)
 
@@ -20,6 +21,12 @@ def board_paged(board):
         abort(404)
     posts = [(get_filetype_type(post), post) for post in posts]
     return render_template("boards/board_paged.html", posts=posts, boards=get_all_boards(), cboard=board)
+
+@bp.route('/<board>/reply/<uid>', methods=['GET' ,'POST'])
+def reply(board, uid):
+    if request.method == 'POST':
+        board_addreply(uid, request.form, request.files, board)
+    return redirect(url_for('boards.board_paged', board=board))
 
 @bp.route('/<board>/catalog', methods=['GET', 'POST'])
 def board_catalog(board):

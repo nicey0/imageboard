@@ -20,43 +20,47 @@
                 <section class="left">
                     <a href="{{ url_for('static', filename='POSTS/DEVELOPMENT/'+post.uid+'.'+post.filetype) }}">{{ post.filename }}</a>
                     {% if ftt == 'image' %}
-                        <img src="{{ url_for('static', filename='POSTS/DEVELOPMENT/'+post.uid+'.'+
-                             post.filetype) }}"
-                     alt="IMAGE_GOES_HERE">
+                        <img src="{{ url_for('static', filename='POSTS/DEVELOPMENT/'+post.uid+'.'+ post.filetype) }}"
+                        alt="IMAGE_GOES_HERE">
                     {% elif ftt == 'video' %}
                         <video controls>
-                            <source src="{{ url_for('static', filename='POSTS/DEVELOPMENT/'+post.uid+'.'+post.filetype) }}" type="video/{{ post.filetype }}">
+                            <source src="{{ url_for('static', filename='POSTS/DEVELOPMENT/'+post.uid+'.'+post.filetype) }}"
+                            type="video/{{ post.filetype }}">
                         </video>
                     {% endif %}
                 </section>
             {% endif %}
             <section class="right">
-                <label for="uid-input">{{ post["uid"] }}</label>
-                <form method="post"><input id="uid-input" name="uid" value="{{ post["uid"] }}" type="hidden" required></form>
+                <!--<form action="{{ url_for('boards.reply', board=cboard, uid=post['uid']) }}" method="post"></form>-->
+                <span>
+                    <span>{{ post["uid"] }}</span>
+                    <button>[<span>Reply</span>]</button>
+                </span>
                 <p>{{ post["body"] }}</p>
             </section>
         </article>
+        {% for response in post.responses %}
         <article class="response">
             {% if post.filename %}
                 <section class="left">
                     <a href="{{ url_for('static', filename='POSTS/DEVELOPMENT/'+post.uid+'.'+post.filetype) }}">{{ post.filename }}</a>
                     {% if ftt == 'image' %}
-                        <img src="{{ url_for('static', filename='POSTS/DEVELOPMENT/'+post.uid+'.'+
-                             post.filetype) }}"
-                     alt="IMAGE_GOES_HERE">
+                        <img src="{{ url_for('static', filename='POSTS/DEVELOPMENT/'+post.uid+'.'+post.filetype) }}" alt="IMAGE_GOES_HERE">
                     {% elif ftt == 'video' %}
                         <video controls>
-                            <source src="{{ url_for('static', filename='POSTS/DEVELOPMENT/'+post.uid+'.'+post.filetype) }}" type="video/{{ post.filetype }}">
+                            <source src="{{ url_for('static', filename='POSTS/DEVELOPMENT/'+post.uid+'.'+post.filetype) }}"
+                            type="video/{{ post.filetype }}">
                         </video>
                     {% endif %}
                 </section>
             {% endif %}
             <section class="right">
                 <label>{{ post["uid"] }}</label>
-                <form method="post"><input id="uid-input" name="uid" value="{{ post["uid"] }}" type="hidden" required></form>
+                <button>[<span>Reply</span>]</button></form>
                 <p>{{ post["body"] }}</p>
             </section>
         </article>
+        {% endfor %}
     </section>
     {% endfor %}
 </main>

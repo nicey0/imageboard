@@ -53,6 +53,9 @@ def board_addpost(form, files, board):
     )
     pdb.session.commit()
 
+def board_addreply(post_uid, form, files, board):
+    print(f"Replying to => '{post_uid}'\nData => {dict(form).update(files)}\nBoard => '{board}'")
+
 def delete_post(post):
     pdb.session.delete(post)
     if post.filename and post.filetype:

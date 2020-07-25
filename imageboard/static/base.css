@@ -127,9 +127,34 @@ header #catalog_view {
     max-width: 40%;
 }
 
-#board_paged .right label {
+#board_paged .right > span {
     font-size: 0.75rem;
+}
+
+#board_paged .right > span span {
+    font-size: inherit;
     cursor: text;
+}
+
+#board_paged .right > span button {
+    border: 0;
+    background-color: var(--bg-a);
+    font-size: inherit;
+    margin-left: 5px;
+}
+
+#board_paged .right button:hover {
+    filter: brightness(100%);
+}
+
+#board_paged .right button span {
+    color: var(--link-a);
+    font-size: inherit;
+}
+
+#board_paged .right button span:hover {
+    cursor: pointer;
+    text-decoration: underline;
 }
 
 #board_paged .post {
