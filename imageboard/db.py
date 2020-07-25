@@ -48,6 +48,7 @@ class Post(pdb.Model):
     body = pdb.Column(pdb.String(10000), nullable=False)
     filename = pdb.Column(pdb.String(3000), nullable=True)
     filetype = pdb.Column(pdb.String(10), nullable=True)
+    ftt = pdb.Column(pdb.String(10), nullable=True)
     responses = pdb.relationship("Response", backref="post", lazy=True)
     board_alias = pdb.Column(pdb.String(1), pdb.ForeignKey('board.alias'), nullable=False)
     created = pdb.Column(pdb.DateTime, server_default=utcnow())
@@ -66,6 +67,7 @@ class Response(pdb.Model):
     body = pdb.Column(pdb.String(10000), nullable=False)
     filename = pdb.Column(pdb.String(3000), nullable=True)
     filetype = pdb.Column(pdb.String(4), nullable=True)
+    ftt = pdb.Column(pdb.String(10), nullable=True)
     post_uid = pdb.Column(pdb.String(64), pdb.ForeignKey('post.uid'), nullable=False)
     created = pdb.Column(pdb.DateTime, server_default=utcnow())
 

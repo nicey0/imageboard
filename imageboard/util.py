@@ -27,12 +27,6 @@ def get_posts_for_board(alias: str, page: int=-1):
 def allowed_file(filename):
     return '.' in filename and filename.split('.')[-1].lower() in set().union(*EXTENSIONS.values())
 
-def get_filetype_type(post):
-    try:
-        return list(filter(lambda k: post.filetype in EXTENSIONS[k], EXTENSIONS))[0]
-    except IndexError:
-        return ''
-
 def get_uid():
     pdb.session.add(UIDOrigin())
     pdb.session.commit()
@@ -43,18 +37,31 @@ def board_addpost(form, files, board):
     uid = get_uid()
     alias = Board.query.filter_by(alias=board).first().alias
     file = files.get('file-in', None)
-    filename = filetype = None
+    filename = filetype = ftt = None
     if file and file != '' and allowed_file(file.filename):
         filename = secure_filename(file.filename)
         filetype = file.mimetype.split('/')[1]
+        ftt = list(filter(lambda k: filetype in EXTENSIONS[k], EXTENSIONS))[0]
         file.save(path.join(app.config['UPLOAD_FOLDER'], uid+'.'+filetype))
     pdb.session.add(
-        Post(uid=uid, body=form["body"], board_alias=alias, filename=filename, filetype=filetype)
+        Post(uid=uid, body=form["body"], board_alias=alias, filename=filename, filetype=filetype, ftt=ftt)
     )
     pdb.session.commit()
 
 def board_addreply(post_uid, form, files, board):
-    print(f"Replying to => '{post_uid}'\nData => {dict(form).update(files)}\nBoard => '{board}'")
+    uid = get_uid()
+    file = files.get('rfile-in', None)
+    filename = filetype = ftt = None
+    if file and file != '' and allowed_file(file.filename):
+        filename = secure_filename(file.filename)
+        filetype = file.mimetype.split('/')[1]
+        ftt = list(filter(lambda k: filetype in EXTENSIONS[k], EXTENSIONS))[0]
+        print(ftt)
+        file.save(path.join(app.config['UPLOAD_FOLDER'], uid+'.'+filetype))
+    pdb.session.add(
+        Response(uid=uid, body=form["body"], filename=filename, filetype=filetype, ftt=ftt, post_uid=post_uid)
+    )
+    pdb.session.commit()
 
 def delete_post(post):
     pdb.session.delete(post)

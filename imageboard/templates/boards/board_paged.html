@@ -10,19 +10,19 @@
         <p>Add post</p>
         <textarea name="body" type="text" cols=30 rows=8 required></textarea>
         <label class="file-input" for="file-in">Upload file</label>
-        <input id="file-in" name="file-in" type="file">
+        <input id="file-in" name="file-in" type="file" required>
         <button>Post</button>
     </form>
-    {% for ftt, post in posts %}
+    {% for post in posts %}
     <section class="thread">
         <article class="post">
             {% if post.filename %}
                 <section class="left">
                     <a href="{{ url_for('static', filename='POSTS/DEVELOPMENT/'+post.uid+'.'+post.filetype) }}">{{ post.filename }}</a>
-                    {% if ftt == 'image' %}
+                    {% if post.ftt == 'image' %}
                         <img src="{{ url_for('static', filename='POSTS/DEVELOPMENT/'+post.uid+'.'+ post.filetype) }}"
                         alt="IMAGE_GOES_HERE">
-                    {% elif ftt == 'video' %}
+                    {% elif post.ftt == 'video' %}
                         <video controls>
                             <source src="{{ url_for('static', filename='POSTS/DEVELOPMENT/'+post.uid+'.'+post.filetype) }}"
                             type="video/{{ post.filetype }}">
@@ -31,36 +31,39 @@
                 </section>
             {% endif %}
             <section class="right">
-                <!--<form action="{{ url_for('boards.reply', board=cboard, uid=post['uid']) }}" method="post"></form>-->
-                <span>
-                    <span>{{ post["uid"] }}</span>
-                    <button>[<span>Reply</span>]</button>
-                </span>
+                <span>{{ post["uid"] }}</span>
                 <p>{{ post["body"] }}</p>
             </section>
         </article>
         {% for response in post.responses %}
         <article class="response">
-            {% if post.filename %}
+            {% if response.filename %}
                 <section class="left">
-                    <a href="{{ url_for('static', filename='POSTS/DEVELOPMENT/'+post.uid+'.'+post.filetype) }}">{{ post.filename }}</a>
-                    {% if ftt == 'image' %}
-                        <img src="{{ url_for('static', filename='POSTS/DEVELOPMENT/'+post.uid+'.'+post.filetype) }}" alt="IMAGE_GOES_HERE">
-                    {% elif ftt == 'video' %}
+                    <a href="{{ url_for('static', filename='POSTS/DEVELOPMENT/'+response.uid+'.'+response.filetype) }}">{{ response.filename }}</a>
+                    {% if response.ftt == 'image' %}
+                        <img src="{{ url_for('static', filename='POSTS/DEVELOPMENT/'+response.uid+'.'+response.filetype) }}" alt="IMAGE_GOES_HERE">
+                    {% elif response.ftt == 'video' %}
                         <video controls>
-                            <source src="{{ url_for('static', filename='POSTS/DEVELOPMENT/'+post.uid+'.'+post.filetype) }}"
-                            type="video/{{ post.filetype }}">
+                            <source src="{{ url_for('static', filename='POSTS/DEVELOPMENT/'+responsep.uid+'.'+response.filetype) }}"
+                            type="video/{{ response.filetype }}">
                         </video>
                     {% endif %}
                 </section>
             {% endif %}
             <section class="right">
-                <label>{{ post["uid"] }}</label>
-                <button>[<span>Reply</span>]</button></form>
-                <p>{{ post["body"] }}</p>
+                <span>{{ response["uid"] }}</span>
+                <p>{{ response["body"] }}</p>
             </section>
-        </article>
+        </article><br>
         {% endfor %}
+        <form class="replybox" method="post" action="{{ url_for('boards.reply', board=cboard, uid=post['uid']) }}"
+                enctype="multipart/form-data">
+            <p>Reply</p>
+            <textarea name="body" type="text" cols=30 rows=8 required></textarea>
+            <label class="file-input" for="rfile-in">Upload file</label>
+            <input id="rfile-in" name="rfile-in" type="file">
+            <button>Reply</button>
+        </form>
     </section>
     {% endfor %}
 </main>

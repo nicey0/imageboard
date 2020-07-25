@@ -30,7 +30,7 @@ a.alt {
     color: var(--link-b);
 }
 
-label[for="file-in"]:hover, button:hover {
+label[for="file-in"]:hover, label[for="rfile-in"]:hover, button:hover {
     filter: brightness(120%);
 }
 
@@ -74,12 +74,11 @@ header #catalog_view {
 }
 
 .add-post {
-    margin-left: 0.25rem;
     padding-bottom: 1rem;
     border-bottom: 1px solid var(--bd-a);
 }
 
-.add-post .file-input, .add-post textarea, .add-post button {
+.file-input, textarea, button {
     border: 1px solid var(--bd-a);
     background-color: var(--bg-b);
     padding: 0.25rem;
@@ -88,24 +87,24 @@ header #catalog_view {
     color: var(--fg-b);
 }
 
-.add-post textarea {
+textarea {
     margin: 0.15rem 0 5px 0;
     max-width: 90%;
 }
 
-.add-post .file-input {
-    margin: 0 0 0.75rem 0;
+.file-input {
     padding: 4px 1.56rem;
     display: inline-block;
 }
 
-.add-post input[type="file"] {
+input[type="file"] {
     position: absolute;
     z-index: -1;
-    left: 1.9rem;
+    left: 1.8rem;
 }
 
-.add-post button {
+button {
+    margin-top: 0.75rem;
     padding: 0.25rem 0.75rem;
 }
 
@@ -182,10 +181,11 @@ header #catalog_view {
 }
 
 #board_paged .response {
-    display: flex;
+    display: inline-flex;
     flex-direction: row;
-    padding: 0.5rem 0 2rem 1rem;
-    border-bottom: 1px solid var(--bd-a);
+    padding: 0.5rem 1rem 1rem 0.5rem;
+    margin: 0.25rem;
+    background-color: #2f2f2f;
     min-height: 5rem;
 }
 
@@ -202,7 +202,7 @@ header #catalog_view {
 }
 
 #board_paged .response .right {
-    display: flex;
+    display: inline-flex;
     flex-direction: column;
 }
 
@@ -210,6 +210,15 @@ header #catalog_view {
     color: var(--black);
     word-break: break-word;
     font-size: 0.95rem;
+}
+
+#board_paged .replybox {
+    margin: 1rem 0;
+}
+
+#board_paged .replybox textarea {
+    margin-top: 0.15rem;
+    margin-bottom: 5px;
 }
 
 #board_catalog {
