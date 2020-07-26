@@ -1,9 +1,10 @@
-from .db import pdb, Board, Post, UIDOrigin, Response
+from .db import pdb, Super, Board, Post, UIDOrigin, Response
 from flask import flash
 from werkzeug.utils import secure_filename
 from os import path, remove, walk
 from hashlib import md5
 from imageboard import app
+from werkzeug.security import generate_password_hash
 
 PAGE_SIZE = 10
 POST_LIMIT = 150
@@ -44,11 +45,15 @@ def get_posts_with_pages(board):
     return pposts
 
 def find_post_page(post):
-    pposts = get_posts_with_pages(post.board)
-    for page, tpost in pposts:
-        if tpost == post:
+    board = post.board_alias
+    page = 0
+    while True:
+        posts = get_posts_for_board(board)
+        if len(posts) == 0:
+            return -1
+        if post in posts:
             return page
-    return -1
+        page += 1
 
 def allowed_file(filename):
     return '.' in filename and filename.split('.')[-1].lower() in set().union(*EXTENSIONS.values())
@@ -99,6 +104,11 @@ def _board_addreply(uid, body, filename, filetype, ftt, post_uid):
     pdb.session.add(
         Post(uid=uid, body=body, filename=filename, filetype=filetype, ftt=ftt)
     )
+
+def add_super(email, password, rank):
+    su = Super(uid=get_uid(), email=email, password=generate_password_hash(password), rank=rank)
+    pdb.session.add(su)
+    pdb.session.commit()
 
 def delete_post(post):
     pdb.session.delete(post)

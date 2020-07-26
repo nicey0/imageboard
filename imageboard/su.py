@@ -1,8 +1,8 @@
 from flask import Blueprint, g, session, request, redirect, url_for, jsonify, flash
 from functools import wraps
 from .db import pdb, SuperTypes, Super, Post
-from .util import find_post_page
-from werkzeug.security import generate_password_hash, check_password_hash
+from .util import find_post_page, add_super
+from werkzeug.security import check_password_hash
 
 bp = Blueprint('su', __name__, url_prefix='/su')
 
@@ -30,11 +30,11 @@ def rank_required(rank: int):
 @bp.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
-        email = request.form["email"]
-        password = request.form["password"]
-        admin = Super(email=email, password=generate_password_hash(password), rank=SuperTypes.MOD)
-        pdb.session.add(admin)
-        pdb.session.commit()
+        add_super(
+            request.form["email"],
+            request.form["password"],
+            SuperTypes.MOD
+        )
     return jsonify([str(a) for a in Super.query.all()])
 
 @bp.route('/login', methods=['GET', 'POST'])
@@ -64,13 +64,11 @@ def delete_post():
 @bp.route('/add', methods=['GET', 'POST'])
 @rank_required(SuperTypes.ADM)
 def add_moderator():
-    mod = Super(
-        email=request.form["email"],
-        password=generate_password_hash(request.form["password"]),
-        rank=SuperTypes.MOD
+    add_super(
+        request.form["email"],
+        request.form["password"],
+        SuperTypes.MOD
     )
-    pdb.session.add(mod)
-    pdb.session.commit()
     return jsonify([str (a) for a in Super.query.all()])
 
 @bp.route('/logout')
