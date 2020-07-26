@@ -58,8 +58,7 @@ def delete_post():
     if len([Super.query.filter_by(uid=g.su).all()]) > 0 and post:
         pdb.session.delete(post)
         pdb.session.commit()
-        return redirect(url_for('index'))
-    return redirect(url_for('index'))
+    return redirect(url_for('boards.board_paged', board=post.board_alias, page=0))
 
 @bp.route('/add', methods=['GET', 'POST'])
 @rank_required(SuperTypes.ADM)

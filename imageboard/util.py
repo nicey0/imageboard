@@ -56,6 +56,8 @@ def board_add_post_or_reply(form, files, board, post_uid=''):
     ftt = list(filter(lambda k: filetype in EXTENSIONS[k], EXTENSIONS))
     if ftt == []:
         flash("Illegal file type")
+        error = True
+    if error:
         return
     ftt = ftt[0]
     # Add post/reply
