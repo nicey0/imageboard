@@ -18,15 +18,20 @@ class utcnow(expression.FunctionElement):
 def pg_utcnow(element, compiler, **kw):
     return "TIMEZONE('utc', CURRENT_TIMESTAMP)"
 
-@compiles(utcnow, 'mssql')
-def ms_utcnow(element, compiler, **kw):
-    return "GETUTCDATE()"
-
 # Models
 class SuperTypes(Enum):
     ADM = 0
     MOD = 1
 class Super(pdb.Model):
+    uid = pdb.Column(pdb.String(64), primary_key=True, nullable=False)
+    email = pdb.Column(pdb.String(160), nullable=False)
+    password = pdb.Column(pdb.String(160), nullable=False)
+    rank = pdb.Column(pdb.Enum(SuperTypes))
+
+    def __repr__(self):
+        return f"<{self.__class__.__name__} [{self.uid} | {self.email}]>"
+
+class Applicant(pdb.Model):
     uid = pdb.Column(pdb.String(64), primary_key=True, nullable=False)
     email = pdb.Column(pdb.String(160), nullable=False)
     password = pdb.Column(pdb.String(160), nullable=False)

@@ -22,6 +22,8 @@ def board_paged(board, page):
     lposts = get_posts_with_replies_for_board(board, page=page)
     if page != 0 and len(lposts) == 0:
         abort(404)
+    if page < 0:
+        page = 0
     return render_template("boards/board_paged.html", posts=lposts, boards=get_all_boards(), cboard=board,
                            page=page)
 
