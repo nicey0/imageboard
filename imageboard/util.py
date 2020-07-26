@@ -39,6 +39,7 @@ def get_uid():
     return md5(bytes(uid.origin)).hexdigest()[:32]
 
 def board_add_post_or_reply(form, files, board, post_uid=''):
+    error = False
     uid = get_uid()
     # Get body content, body is '' if empty
     body = form.get('body')
@@ -49,9 +50,14 @@ def board_add_post_or_reply(form, files, board, post_uid=''):
     to_flash = [k for k in list(filter(lambda k: c[k] == '', c))]
     if to_flash != []:
         [flash(f"Please fill '{k}' field") for k in to_flash]
-        return
+        error = True
     # Get file information
-    filename, filetype, ftt = _get_file_info(file)
+    filename, filetype = secure_filename(file.filename), file.mimetype.split('/')[1]
+    ftt = list(filter(lambda k: filetype in EXTENSIONS[k], EXTENSIONS))
+    if ftt == []:
+        flash("Illegal file type")
+        return
+    ftt = ftt[0]
     # Add post/reply
     if post_uid == '':
         _board_addpost(uid, body, filename, filetype, ftt, board)
@@ -59,11 +65,6 @@ def board_add_post_or_reply(form, files, board, post_uid=''):
         _board_addreply(uid, body, filename, filetype, ftt, post_uid)
     pdb.session.commit()
     file.save(path.join(app.config['UPLOAD_FOLDER'], uid+'.'+filetype))
-
-def _get_file_info(file):
-    filename, filetype = secure_filename(file.filename), file.mimetype.split('/')[1]
-    ftt = list(filter(lambda k: filetype in EXTENSIONS[k], EXTENSIONS))[0]
-    return filename, filetype, ftt
 
 def _board_addpost(uid, body, filename, filetype, ftt, board):
     alias = Board.query.filter_by(alias=board).first().alias
