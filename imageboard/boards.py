@@ -8,6 +8,9 @@ bp = Blueprint('boards', __name__)
 def index():
     return render_template("boards/index.html", boards=get_all_boards())
 
+@bp.route('/<board>')
+def board_no_page(board):
+    return redirect(url_for('boards.board_paged', board=board, page=0))
 @bp.route('/<board>/<int:page>', methods=['GET', 'POST'])
 def board_paged(board, page):
     if request.method == 'POST':
