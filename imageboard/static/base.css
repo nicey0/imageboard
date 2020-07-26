@@ -10,11 +10,16 @@
     scrollbar-color: var(--link-a) var(--bg-a);
 }
 
-body {
+html {
     height: 100%;
+}
+
+body {
+    min-height: 100%;
     width: 100%;
     padding-bottom: 1.5rem;
     background-color: var(--bg-a);
+    position: relative;
 }
 
 a {
@@ -28,6 +33,14 @@ a:hover {
 
 a.alt {
     color: var(--link-b);
+}
+
+li {
+    display: inline;
+}
+
+li.hori {
+    margin: 0 0.4rem 0 0;
 }
 
 label[for="file-in"]:hover, label[for="rfile-in"]:hover, button:hover {
@@ -66,11 +79,6 @@ header #boards {
     flex-wrap: wrap;
     align-items: flex-start;
     border-bottom: 1px solid var(--bd-a);
-}
-
-header #boards li {
-    display: inline;
-    margin: 0 0.4rem 0 0;
 }
 
 header #catalog_view {
@@ -129,4 +137,20 @@ header #catalog_view {
 #index section h1 {
     font-size: 1.55rem;
     margin-bottom: 0.5rem;
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    border-top: 1px solid var(--bd-a);
+    width: 100%;
+}
+
+footer > * {
+    padding: 0.5rem;
+}
+
+footer #sudash {
+    display: flex;
+    flex-direction: row;
 }

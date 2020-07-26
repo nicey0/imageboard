@@ -16,7 +16,7 @@
     <header>
         <ul id="boards">
             {% for board in boards %}
-            <li><a href="{{ url_for('boards.board_paged', board=board['name'], page=0) }}">/{{ board["name"] }}/</a></li>
+            <li class="hori"><a href="{{ url_for('boards.board_paged', board=board['name'], page=0) }}">/{{ board["name"] }}/</a></li>
             {% endfor %}
         </ul>
         {% block header %}
@@ -24,6 +24,12 @@
     </header>
     {% block body %}
     {% endblock body %}
+    <footer>
+        <ul id="sudash">
+            <li class="hori"><a href="{{ url_for('su.register') }}">Register</a></li>
+            <li class="hori"><a href="{{ url_for('su.login') }}">Login</a></li>
+        </ul>
+    </footer>
 </body>
 <script src="{{ url_for('static', filename='fileupload.js') }}"></script>
 {% block scripts %}
