@@ -1,4 +1,5 @@
 from .db import pdb, Board, Post, UIDOrigin, Response
+from flask import flash
 from werkzeug.utils import secure_filename
 from os import path, remove, walk
 from hashlib import md5
@@ -38,23 +39,34 @@ def get_uid():
     return md5(bytes(uid.origin)).hexdigest()[:32]
 
 def board_addpost(form, files, board):
+    to_flash = []
     uid = get_uid()
     alias = Board.query.filter_by(alias=board).first().alias
-    file = files.get('file-in', None)
-    filename = filetype = ftt = None
-    if file and file != '' and allowed_file(file.filename):
+    body = form.get('body')
+    if body == '':
+        to_flash.append('body')
+    file = files.get('file-in')
+    if file.filename == '':
+        to_flash.append('file')
+    if to_flash == [] and allowed_file(file.filename):
         filename = secure_filename(file.filename)
         filetype = file.mimetype.split('/')[1]
         ftt = list(filter(lambda k: filetype in EXTENSIONS[k], EXTENSIONS))[0]
         file.save(path.join(app.config['UPLOAD_FOLDER'], uid+'.'+filetype))
-    pdb.session.add(
-        Post(uid=uid, body=form["body"], board_alias=alias, filename=filename, filetype=filetype, ftt=ftt)
-    )
-    pdb.session.commit()
+        pdb.session.add(
+            Post(uid=uid, body=body, board_alias=alias, filename=filename, filetype=filetype, ftt=ftt)
+        )
+        pdb.session.commit()
+    return to_flash
 
 def board_addreply(post_uid, form, files, board):
     uid = get_uid()
+    body = form.get('body')
+    if body is None:
+        return 'body'
     file = files.get('rfile-in', None)
+    if file.filename == '':
+        return 'file'
     filename = filetype = ftt = None
     if file and file != '' and allowed_file(file.filename):
         filename = secure_filename(file.filename)
@@ -63,7 +75,7 @@ def board_addreply(post_uid, form, files, board):
         print(ftt)
         file.save(path.join(app.config['UPLOAD_FOLDER'], uid+'.'+filetype))
     pdb.session.add(
-        Response(uid=uid, body=form["body"], filename=filename, filetype=filetype, ftt=ftt, post_uid=post_uid)
+        Response(uid=uid, body=body, filename=filename, filetype=filetype, ftt=ftt, post_uid=post_uid)
     )
     pdb.session.commit()
 

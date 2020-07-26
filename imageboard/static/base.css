@@ -34,6 +34,12 @@ label[for="file-in"]:hover, label[for="rfile-in"]:hover, button:hover {
     filter: brightness(120%);
 }
 
+div#flashed {
+    background-color: #522;
+    padding: 0.5rem;
+    border-bottom: 1px solid #a44;
+}
+
 main#board_paged {
     padding: 0 5px 0 1rem;
 }

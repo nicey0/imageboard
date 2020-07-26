@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, jsonify, abort, redirect, url_for
+from flask import Blueprint, render_template, request, abort, redirect, url_for, flash
 from .util import (get_all_boards, board_addpost, board_addreply, get_posts_for_board,
                    get_posts_with_replies_for_board)
 
@@ -14,13 +14,15 @@ def board_no_page(board):
 @bp.route('/<board>/<int:page>', methods=['GET', 'POST'])
 def board_paged(board, page):
     if request.method == 'POST':
-        board_addpost(request.form, request.files, board)
+        result = board_addpost(request.form, request.files, board)
+        if result != []:
+            for tf in result:
+                flash(f"Please fill '{tf}' field")
     try:
         page = int(page)
     except ValueError:
         abort(404)
     lposts = get_posts_with_replies_for_board(board, page=page)
-    print(lposts)
     if page != 0 and len(lposts) == 0:
         abort(404)
     return render_template("boards/board_paged.html", posts=lposts, boards=get_all_boards(), cboard=board,
@@ -29,7 +31,10 @@ def board_paged(board, page):
 @bp.route('/<board>/reply/<uid>', methods=['GET' ,'POST'])
 def reply(board, uid):
     if request.method == 'POST':
-        board_addreply(uid, request.form, request.files, board)
+        result = board_addreply(uid, request.form, request.files, board)
+        if result == []:
+            for tf in result:
+                flash(f"Please fill '{tf}' field")
         try:
             page = int(request.form.get('page'))
         except ValueError:
@@ -38,8 +43,6 @@ def reply(board, uid):
 
 @bp.route('/<board>/catalog', methods=['GET', 'POST'])
 def board_catalog(board):
-    if request.method == 'POST':
-        board_addpost(request.form, board)
     pposts = []
     page = 0
     while True:

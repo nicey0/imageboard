@@ -11,8 +11,8 @@
 <main id="board_paged">
     <form class="add-post" method="post" enctype="multipart/form-data">
         <p>Add post</p>
-        <textarea name="body" type="text" cols=30 rows=8 required></textarea>
-        <input id="file-in" name="file-in" type="file" required>
+        <textarea name="body" type="text" cols=30 rows=8></textarea>
+        <input id="file-in" name="file-in" type="file">
         <label class="file-input" for="file-in">Upload file</label>
         <button>Post</button>
     </form>
@@ -62,10 +62,10 @@
         <form class="replybox" method="post" action="{{ url_for('boards.reply', board=cboard, uid=post['uid']) }}"
                 enctype="multipart/form-data">
             <p>Reply</p>
-            <textarea name="body" type="text" cols=30 rows=8 required></textarea>
+            <textarea name="body" type="text" cols=30 rows=8></textarea>
             <input id="rfile-in{{ post['uid'] }}" name="rfile-in" type="file">
             <label class="file-input" for="rfile-in{{ post['uid'] }}">Upload file</label>
-            <input name="page" value="{{ page }}" type="hidden" required>
+            <input name="page" value="{{ page }}" type="hidden">
             <button>Reply</button>
         </form>
     </section>
