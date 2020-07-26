@@ -29,6 +29,27 @@ def get_posts_with_replies_for_board(alias: str, page: int=-1):
         lposts.append((post, list(post.responses)))
     return lposts
 
+def get_posts_with_pages(board):
+    pposts = []
+    page = 0
+    while True:
+        posts = get_posts_for_board(board, page)
+        if len(posts) == 0:
+            break
+        elif len(pposts) == page+1:
+            pposts[page][1].append(posts)
+        else:
+            pposts.append([page, posts])
+            page += 1
+    return pposts
+
+def find_post_page(post):
+    pposts = get_posts_with_pages(post.board)
+    for page, tpost in pposts:
+        if tpost == post:
+            return page
+    return -1
+
 def allowed_file(filename):
     return '.' in filename and filename.split('.')[-1].lower() in set().union(*EXTENSIONS.values())
 

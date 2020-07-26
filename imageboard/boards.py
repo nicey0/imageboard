@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, abort, redirect, url_for, flash
-from .util import (get_all_boards, board_add_post_or_reply, get_posts_for_board,
+from .util import (get_all_boards, board_add_post_or_reply, get_posts_with_pages,
                    get_posts_with_replies_for_board)
 
 bp = Blueprint('boards', __name__)
@@ -37,16 +37,6 @@ def reply(board, uid):
 
 @bp.route('/<board>/catalog', methods=['GET', 'POST'])
 def board_catalog(board):
-    pposts = []
-    page = 0
-    while True:
-        posts = get_posts_for_board(board, page)
-        if len(posts) == 0:
-            break
-        if len(pposts) == page+1:
-            pposts[page][1].append(posts)
-        else:
-            pposts.append([page, posts])
-            page += 1
+    pposts = get_posts_with_pages(board)
     print(*[post for post in pposts])
     return render_template('boards/board_catalog.html', pposts=pposts, boards=get_all_boards(), cboard=board)

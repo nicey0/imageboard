@@ -1,6 +1,7 @@
 from flask import Blueprint, g, session, request, redirect, url_for, jsonify, flash
 from functools import wraps
 from .db import pdb, SuperTypes, Super, Post
+from .util import find_post_page
 from werkzeug.security import generate_password_hash, check_password_hash
 
 bp = Blueprint('su', __name__, url_prefix='/su')
@@ -52,13 +53,13 @@ def login():
 @bp.route('/delete', methods=['POST'])
 @login_required
 def delete_post():
-    # extra check
     uid = request.form["uid"]
     post = Post.query.filter_by(uid=uid).first()
     if len([Super.query.filter_by(uid=g.su).all()]) > 0 and post:
         pdb.session.delete(post)
         pdb.session.commit()
-    return redirect(url_for('boards.board_paged', board=post.board_alias, page=0))
+    page = find_post_page(post.board)
+    return redirect(url_for('boards.board_paged', board=post.board_alias, page=page))
 
 @bp.route('/add', methods=['GET', 'POST'])
 @rank_required(SuperTypes.ADM)
