@@ -24,6 +24,13 @@ def get_posts_for_board(alias: str, page: int=-1):
         pdb.session.commit()
     return posts
 
+def get_posts_with_replies_for_board(alias: str, page: int=-1):
+    posts = get_posts_for_board(alias, page=page)
+    lposts = []
+    for post in posts:
+        lposts.append((post, list(post.responses)))
+    return lposts
+
 def allowed_file(filename):
     return '.' in filename and filename.split('.')[-1].lower() in set().union(*EXTENSIONS.values())
 

@@ -16,7 +16,7 @@
         <label class="file-input" for="file-in">Upload file</label>
         <button>Post</button>
     </form>
-    {% for post in posts %}
+    {% for post, responses in posts %}
     <section class="thread">
         <article class="post">
             {% if post.filename %}
@@ -38,7 +38,7 @@
                 <p>{{ post["body"] }}</p>
             </section>
         </article>
-        {% for response in post.responses %}
+        {% for response in responses %}
         <article class="response">
             {% if response.filename %}
                 <section class="left">
