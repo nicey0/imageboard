@@ -18,7 +18,7 @@ def board_paged(board):
         abort(404)
     lposts = get_posts_with_replies_for_board(board, page=page)
     print(lposts)
-    if page != 0 and len(posts) == 0:
+    if page != 0 and len(lposts) == 0:
         abort(404)
     return render_template("boards/board_paged.html", posts=lposts, boards=get_all_boards(), cboard=board)
 
