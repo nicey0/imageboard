@@ -1,7 +1,7 @@
 from flask import Blueprint, g, session, request, redirect, url_for, jsonify, flash
 from functools import wraps
 from .db import pdb, SuperTypes, Super, Post, Board
-from .util import find_post_page, add_super
+from .util import find_post_page, add_super, confirm_application, deny_application
 from werkzeug.security import check_password_hash
 
 bp = Blueprint('su', __name__, url_prefix='/su')
@@ -38,18 +38,22 @@ def register():
         add_super(
             request.form["email"],
             request.form["password"],
-            SuperTypes.MOD
+            SuperTypes.APP
         )
     return jsonify([str(a) for a in Super.query.all()])
 
 @bp.route('/add', methods=['GET', 'POST'])
 @rank_required(SuperTypes.ADM)
 def add_moderator():
-    add_super(
-        request.form["email"],
-        request.form["password"],
-        SuperTypes.MOD
-    )
+    email = request.form["email"]
+    confirm_application(email, SuperTypes.MOD)
+    return jsonify([str (a) for a in Super.query.all()])
+
+@bp.route('/remove', methods=['GET', 'POST'])
+@rank_required(SuperTypes.ADM)
+def deny_su_application():
+    email = request.form["email"]
+    deny_application(email)
     return jsonify([str (a) for a in Super.query.all()])
 
 @bp.route('/login', methods=['GET', 'POST'])

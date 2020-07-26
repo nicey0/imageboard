@@ -1,4 +1,4 @@
-from .db import pdb, Super, Board, Post, UIDOrigin, Response
+from .db import pdb, SuperTypes, Super, Board, Post, UIDOrigin, Response
 from flask import flash
 from werkzeug.utils import secure_filename
 from os import path, remove, walk
@@ -109,6 +109,20 @@ def add_super(email, password, rank):
     su = Super(uid=get_uid(), email=email, password=generate_password_hash(password), rank=rank)
     pdb.session.add(su)
     pdb.session.commit()
+
+def confirm_application(email, rank):
+    ap = Super.query.filter_by(email=email, rank=SuperTypes.APP).first()
+    if ap:
+        confirmed = Super(uid=ap.uid, email=email, password=ap.password, rank=rank)
+        pdb.session.delete(ap)
+        pdb.session.add(confirmed)
+        pdb.session.commit()
+
+def deny_application(email):
+    ap = Super.query.filter_by(email=email).first()
+    if ap:
+        pdb.session.delete(ap)
+        pdb.session.commit()
 
 def delete_post(post):
     pdb.session.delete(post)
