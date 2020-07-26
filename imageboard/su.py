@@ -40,21 +40,25 @@ def register():
             request.form["password"],
             SuperTypes.APP
         )
-    return jsonify([str(a) for a in Super.query.all()])
+    return redirect(url_for('index'), code=303)
 
-@bp.route('/add', methods=['GET', 'POST'])
+@bp.route('/appldashboard')
+def applicants_dashboard():
+    return ""
+
+@bp.route('/add', methods=['POST'])
 @rank_required(SuperTypes.ADM)
 def add_moderator():
     email = request.form["email"]
     confirm_application(email, SuperTypes.MOD)
-    return jsonify([str (a) for a in Super.query.all()])
+    return redirect(url_for('applicants_dashboard'), code=303)
 
-@bp.route('/remove', methods=['GET', 'POST'])
+@bp.route('/remove', methods=['POST'])
 @rank_required(SuperTypes.ADM)
 def deny_su_application():
     email = request.form["email"]
     deny_application(email)
-    return jsonify([str (a) for a in Super.query.all()])
+    return redirect(url_for('applicants_dashboard'), code=303)
 
 @bp.route('/login', methods=['GET', 'POST'])
 def login():
@@ -67,7 +71,7 @@ def login():
                 session['su'] = admin.uid
         else:
             flash("email/password combination failed.")
-    return jsonify([str(a) for a in Super.query.all()])
+    return redirect(url_for('index'), code=303)
 
 @bp.route('/delete', methods=['POST'])
 @rank_required(SuperTypes.MOD)
