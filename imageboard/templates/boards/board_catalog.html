@@ -1,14 +1,14 @@
 {% extends 'base.html' %}
 {% block body %}
 <main id="board_catalog">
-    {% for ftt, post in posts %}
+    {% for post in posts %}
     <article class="post">
         {% if post.filename %}
-            {% if ftt == 'image' %}
+            {% if post.ftt == 'image' %}
                 <img src="{{ url_for('static', filename='POSTS/DEVELOPMENT/'+post.uid+'.'+
                      post.filetype) }}"
              alt="IMAGE_GOES_HERE">
-            {% elif ftt == 'video' %}
+            {% elif post.ftt == 'video' %}
                 <video controls>
                     <source src="{{ url_for('static', filename='POSTS/DEVELOPMENT/'+post.uid+'.'+post.filetype) }}"
                             type="video/{{ post.filetype }}">

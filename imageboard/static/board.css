@@ -73,7 +73,7 @@ form input[type="file"] {
     font-size: 0.8rem;
 }
 
-#board_paged img {
+#board_paged img, #board_paged video {
     max-width: 100%;
     max-height: 18rem;
 }
