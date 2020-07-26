@@ -13,7 +13,7 @@
     <header>
         <section id="boards">
             {% for board in boards %}
-            <a href="{{ url_for('boards.board_paged', board=board['name']) }}">/{{ board["name"] }}/</a>
+            <a href="{{ url_for('boards.board_paged', board=board['name'], page=0) }}">/{{ board["name"] }}/</a>
             {% endfor %}
         </section>
         {% block header %}

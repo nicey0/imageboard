@@ -1,23 +1,27 @@
 {% extends 'base.html' %}
 {% block body %}
 <main id="board_catalog">
+    {% for page, posts in pposts %}
     {% for post in posts %}
     <article class="post">
         {% if post.filename %}
-            {% if post.ftt == 'image' %}
-                <img src="{{ url_for('static', filename='POSTS/DEVELOPMENT/'+post.uid+'.'+
-                     post.filetype) }}"
+        <a href="{{ url_for('boards.board_paged', board=cboard, page=page) }}">
+        {% if post.ftt == 'image' %}
+        <img src="{{ url_for('static', filename='POSTS/DEVELOPMENT/'+post.uid+'.'+
+                      post.filetype) }}"
              alt="IMAGE_GOES_HERE">
-            {% elif post.ftt == 'video' %}
-                <video controls>
-                    <source src="{{ url_for('static', filename='POSTS/DEVELOPMENT/'+post.uid+'.'+post.filetype) }}"
-                            type="video/{{ post.filetype }}">
-                </video>
-            {% endif %}
+        {% elif post.ftt == 'video' %}
+        <video controls>
+            <source src="{{ url_for('static', filename='POSTS/DEVELOPMENT/'+post.uid+'.'+post.filetype) }}"
+                    type="video/{{ post.filetype }}">
+        </video>
+        {% endif %}
+        </a>
         {% endif %}
         <span><b>R:</b> {{ post["responses"]|length }}</span>
         <span>{{ post["body"] }}</span>
     </article>
+    {% endfor %}
     {% endfor %}
 </main>
 {% endblock body %}

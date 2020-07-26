@@ -11,9 +11,6 @@ EXTENSIONS = {'image': {'jpg', 'jpeg', 'png', 'gif'}, 'video': {'mp4', 'webm'}}
 def get_all_boards():
     return Board.query.all()
 
-def get_page(args):
-    return int((lambda x: x if x is not None else 0)(args.get('page', None)))
-
 def get_posts_for_board(alias: str, page: int=-1):
     posts = Post.query.filter_by(board_alias=alias).order_by(Post.created.desc()).all()
     if page > -1:
