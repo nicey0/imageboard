@@ -1,0 +1,147 @@
+.add-post {
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--bd-a);
+}
+
+.file-input, textarea, button {
+    border: 1px solid var(--bd-a);
+    background-color: var(--bg-b);
+    padding: 0.25rem;
+    display: block;
+    font-weight: normal;
+    color: var(--fg-b);
+}
+
+textarea {
+    margin: 0.15rem 0 5px 0;
+    max-width: 90%;
+}
+
+.file-input {
+    padding: 4px 1.56rem;
+    display: inline-block;
+}
+
+input[type="file"] {
+    position: absolute;
+    z-index: -1;
+    left: 1.8rem;
+}
+
+button {
+    margin-top: 0.75rem;
+    padding: 0.25rem 0.75rem;
+}
+
+#board_paged .thread {
+    border-bottom: 1px solid var(--bd-a);
+}
+
+#board_paged .left a {
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 0.2rem;
+}
+
+#board_paged .right {
+    display: flex;
+    flex-direction: column;
+    max-width: 40%;
+}
+
+#board_paged .right > span {
+    font-size: 0.75rem;
+}
+
+#board_paged .right > span span {
+    font-size: inherit;
+    cursor: text;
+}
+
+#board_paged .right > span button {
+    border: 0;
+    background-color: var(--bg-a);
+    font-size: inherit;
+    margin-left: 5px;
+}
+
+#board_paged .right button:hover {
+    filter: brightness(100%);
+}
+
+#board_paged .right button span {
+    color: var(--link-a);
+    font-size: inherit;
+}
+
+#board_paged .right button span:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+#board_paged .post {
+    display: flex;
+    flex-direction: row;
+    padding: 0.5rem 0 1rem 1rem;
+    min-height: 5rem;
+}
+
+#board_paged .post .left {
+    display: inline-flex;
+    flex-direction: column;
+    margin-right: 0.5rem;
+    max-width: 15%;
+}
+
+#board_paged .post .left img,  .post .left video {
+    min-width: 10%;
+    max-width: 100%;
+}
+
+#board_paged .post .right p {
+    color: var(--black);
+    word-break: break-word;
+}
+
+#board_paged .response {
+    display: inline-flex;
+    flex-direction: row;
+    padding: 0.5rem 1rem 1rem 0.5rem;
+    margin: 0.25rem;
+    background-color: #2f2f2f;
+    min-height: 5rem;
+}
+
+#board_paged .response .left {
+    display: inline-flex;
+    flex-direction: column;
+    margin-right: 0.5rem;
+    max-width: 12.5%;
+}
+
+#board_paged .response .left img,  .response .left video {
+    min-width: 10%;
+    max-width: 100%;
+}
+
+#board_paged .response .right {
+    display: inline-flex;
+    flex-direction: column;
+}
+
+#board_paged .response .right p {
+    color: var(--black);
+    word-break: break-word;
+    font-size: 0.95rem;
+}
+
+#board_paged .replybox {
+    margin: 1rem 0;
+}
+
+#board_paged .replybox textarea {
+    margin-top: 0.15rem;
+    margin-bottom: 5px;
+}

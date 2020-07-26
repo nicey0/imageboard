@@ -1,4 +1,7 @@
 {% extends 'base.html' %}
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='board.css') }}">
+{% endblock head %}
 {% block header %}
 <section id="catalog_view">
     <a href="{{ url_for('boards.board_catalog', board=cboard) }}">Catalog</a>
@@ -9,8 +12,8 @@
     <form class="add-post" method="post" enctype="multipart/form-data">
         <p>Add post</p>
         <textarea name="body" type="text" cols=30 rows=8 required></textarea>
-        <label class="file-input" for="file-in">Upload file</label>
         <input id="file-in" name="file-in" type="file" required>
+        <label class="file-input" for="file-in">Upload file</label>
         <button>Post</button>
     </form>
     {% for post in posts %}
@@ -60,8 +63,8 @@
                 enctype="multipart/form-data">
             <p>Reply</p>
             <textarea name="body" type="text" cols=30 rows=8 required></textarea>
-            <label class="file-input" for="rfile-in">Upload file</label>
             <input id="rfile-in" name="rfile-in" type="file">
+            <label class="file-input" for="rfile-in">Upload file</label>
             <button>Reply</button>
         </form>
     </section>

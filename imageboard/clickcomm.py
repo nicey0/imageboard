@@ -31,19 +31,7 @@ def init_boards():
     pdb.session.commit()
     click.echo("Initialized boards.")
 
-@click.command('add-test-posts')
-@with_appcontext
-def add_test_posts():
-    boards = 'abcdefghijklmnopqrstuvwxyz'
-    for alias in boards:
-        board = Board.query.filter_by(alias=alias).first()
-        for k in range(50):
-            board_addpost({"body": f"post[/{board.alias}/ post_n{k}]"}, dict(), board.alias)
-    pdb.session.commit()
-    click.echo("5 pages added (10 posts each) for each board (/a/ to /z/)")
-
 def add_commands():
     app.cli.add_command(init_db)
     app.cli.add_command(init_admin)
     app.cli.add_command(init_boards)
-    app.cli.add_command(add_test_posts)
