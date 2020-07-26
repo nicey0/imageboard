@@ -47,7 +47,7 @@
                         <img src="{{ url_for('static', filename='POSTS/DEVELOPMENT/'+response.uid+'.'+response.filetype) }}" alt="IMAGE_GOES_HERE">
                     {% elif response.ftt == 'video' %}
                         <video controls>
-                            <source src="{{ url_for('static', filename='POSTS/DEVELOPMENT/'+responsep.uid+'.'+response.filetype) }}"
+                            <source src="{{ url_for('static', filename='POSTS/DEVELOPMENT/'+response.uid+'.'+response.filetype) }}"
                             type="video/{{ response.filetype }}">
                         </video>
                     {% endif %}
@@ -63,8 +63,8 @@
                 enctype="multipart/form-data">
             <p>Reply</p>
             <textarea name="body" type="text" cols=30 rows=8 required></textarea>
-            <input id="rfile-in" name="rfile-in" type="file">
-            <label class="file-input" for="rfile-in">Upload file</label>
+            <input id="rfile-in{{ post['uid'] }}" name="rfile-in" type="file">
+            <label class="file-input" for="rfile-in{{ post['uid'] }}">Upload file</label>
             <button>Reply</button>
         </form>
     </section>

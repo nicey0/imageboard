@@ -17,6 +17,10 @@ form .file-input {
     display: inline-block;
 }
 
+form .file-input:hover {
+    filter: brightness(120%);
+}
+
 form input[type="file"] {
     position: absolute;
     z-index: -1;
