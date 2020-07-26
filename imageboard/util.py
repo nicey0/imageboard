@@ -58,6 +58,7 @@ def board_add_post_or_reply(form, files, board, post_uid=''):
     else:
         _board_addreply(uid, body, filename, filetype, ftt, post_uid)
     pdb.session.commit()
+    file.save(path.join(app.config['UPLOAD_FOLDER'], uid+'.'+filetype))
 
 def _get_file_info(file):
     filename, filetype = secure_filename(file.filename), file.mimetype.split('/')[1]
