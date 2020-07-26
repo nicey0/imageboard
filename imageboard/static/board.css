@@ -10,7 +10,7 @@ form .file-input, form textarea, form button {
 }
 
 form button, form .file-input {
-    padding: 4px 1.6rem;
+    padding: 0.3rem 1.6rem;
 }
 
 form .file-input {
@@ -22,9 +22,8 @@ form .file-input:hover {
 }
 
 form input[type="file"] {
-    position: absolute;
-    z-index: -1;
-    left: 1.8rem;
+    display: none;
+    opacity: 0;
 }
 
 /* Thread */

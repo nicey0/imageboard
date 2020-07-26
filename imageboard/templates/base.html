@@ -11,15 +11,18 @@
 </head>
 <body>
     <header>
-        <section id="boards">
+        <ul id="boards">
             {% for board in boards %}
-            <a href="{{ url_for('boards.board_paged', board=board['name'], page=0) }}">/{{ board["name"] }}/</a>
+            <li><a href="{{ url_for('boards.board_paged', board=board['name'], page=0) }}">/{{ board["name"] }}/</a></li>
             {% endfor %}
-        </section>
+        </ul>
         {% block header %}
         {% endblock header %}
     </header>
     {% block body %}
     {% endblock body %}
 </body>
+<script src="{{ url_for('static', filename='fileupload.js') }}"></script>
+{% block scripts %}
+{% endblock scripts %}
 </html>

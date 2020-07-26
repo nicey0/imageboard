@@ -62,8 +62,9 @@ header #boards {
     border-bottom: 1px solid var(--bd-a);
 }
 
-header #boards a {
-    margin: 0 5px;
+header #boards li {
+    display: inline;
+    margin: 0 0.4rem 0 0;
 }
 
 header #catalog_view {
