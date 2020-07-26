@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, abort, redirect, url_for, flash
-from .util import (get_all_boards, board_addpost, board_addreply, get_posts_for_board,
+from .util import (get_all_boards, board_add_post_or_reply, get_posts_for_board,
                    get_posts_with_replies_for_board)
 
 bp = Blueprint('boards', __name__)
@@ -14,10 +14,7 @@ def board_no_page(board):
 @bp.route('/<board>/<int:page>', methods=['GET', 'POST'])
 def board_paged(board, page):
     if request.method == 'POST':
-        result = board_addpost(request.form, request.files, board)
-        if result != []:
-            for tf in result:
-                flash(f"Please fill '{tf}' field")
+        board_add_post_or_reply(request.form, request.files, board)
     try:
         page = int(page)
     except ValueError:
@@ -31,10 +28,7 @@ def board_paged(board, page):
 @bp.route('/<board>/reply/<uid>', methods=['GET' ,'POST'])
 def reply(board, uid):
     if request.method == 'POST':
-        result = board_addreply(uid, request.form, request.files, board)
-        if result == []:
-            for tf in result:
-                flash(f"Please fill '{tf}' field")
+        board_add_post_or_reply(request.form, request.files, board, uid)
         try:
             page = int(request.form.get('page'))
         except ValueError:

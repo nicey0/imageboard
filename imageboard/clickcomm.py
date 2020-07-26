@@ -1,6 +1,6 @@
 from . import app
-from .db import pdb, SuperTypes, Super, Board, Post
-from .util import board_addpost, clear_post_files
+from .db import pdb, SuperTypes, Super, Board
+from .util import clear_post_files
 import click
 from flask.cli import with_appcontext
 from werkzeug.security import generate_password_hash

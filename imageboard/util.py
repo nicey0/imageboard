@@ -38,46 +38,42 @@ def get_uid():
     uid = UIDOrigin.query.order_by(UIDOrigin.origin.desc()).first()
     return md5(bytes(uid.origin)).hexdigest()[:32]
 
-def board_addpost(form, files, board):
-    to_flash = []
+def board_add_post_or_reply(form, files, board, post_uid=''):
     uid = get_uid()
-    alias = Board.query.filter_by(alias=board).first().alias
+    # Get body content, body is '' if empty
     body = form.get('body')
-    if body == '':
-        to_flash.append('body')
+    # Get file, file.filename is '' if empty
     file = files.get('file-in')
-    if file.filename == '':
-        to_flash.append('file')
-    if to_flash == [] and allowed_file(file.filename):
-        filename = secure_filename(file.filename)
-        filetype = file.mimetype.split('/')[1]
-        ftt = list(filter(lambda k: filetype in EXTENSIONS[k], EXTENSIONS))[0]
-        file.save(path.join(app.config['UPLOAD_FOLDER'], uid+'.'+filetype))
-        pdb.session.add(
-            Post(uid=uid, body=body, board_alias=alias, filename=filename, filetype=filetype, ftt=ftt)
-        )
-        pdb.session.commit()
-    return to_flash
-
-def board_addreply(post_uid, form, files, board):
-    uid = get_uid()
-    body = form.get('body')
-    if body is None:
-        return 'body'
-    file = files.get('rfile-in', None)
-    if file.filename == '':
-        return 'file'
-    filename = filetype = ftt = None
-    if file and file != '' and allowed_file(file.filename):
-        filename = secure_filename(file.filename)
-        filetype = file.mimetype.split('/')[1]
-        ftt = list(filter(lambda k: filetype in EXTENSIONS[k], EXTENSIONS))[0]
-        print(ftt)
-        file.save(path.join(app.config['UPLOAD_FOLDER'], uid+'.'+filetype))
-    pdb.session.add(
-        Response(uid=uid, body=body, filename=filename, filetype=filetype, ftt=ftt, post_uid=post_uid)
-    )
+    # Filter off the ones that aren't empty
+    c = {'body': body, 'file': file.filename}
+    to_flash = [k for k in list(filter(lambda k: c[k] == '', c))]
+    if to_flash != []:
+        [flash(f"Please fill '{k}' field") for k in to_flash]
+        return
+    # Get file information
+    filename, filetype, ftt = _get_file_info(file)
+    # Add post/reply
+    if post_uid == '':
+        _board_addpost(uid, body, filename, filetype, ftt, board)
+    else:
+        _board_addreply(uid, body, filename, filetype, ftt, post_uid)
     pdb.session.commit()
+
+def _get_file_info(file):
+    filename, filetype = secure_filename(file.filename), file.mimetype.split('/')[1]
+    ftt = list(filter(lambda k: filetype in EXTENSIONS[k], EXTENSIONS))[0]
+    return filename, filetype, ftt
+
+def _board_addpost(uid, body, filename, filetype, ftt, board):
+    alias = Board.query.filter_by(alias=board).first().alias
+    pdb.session.add(
+        Post(uid=uid, body=body, board_alias=alias, filename=filename, filetype=filetype, ftt=ftt)
+    )
+
+def _board_addreply(uid, body, filename, filetype, ftt, post_uid):
+    pdb.session.add(
+        Post(uid=uid, body=body, filename=filename, filetype=filetype, ftt=ftt)
+    )
 
 def delete_post(post):
     pdb.session.delete(post)
