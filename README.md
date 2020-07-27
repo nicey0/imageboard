@@ -13,7 +13,7 @@ Resume and practice.
 Python+Flask
 
 ## When?
-(2020-07-21)-
+(2020-07-21)-(2020-07-27) (7 days)
 
 ## Where?
 This repository.
