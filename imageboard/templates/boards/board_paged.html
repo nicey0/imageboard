@@ -34,7 +34,17 @@
                 </section>
             {% endif %}
             <section class="right">
+                {% if g.su %}
+                <span>
+                    <form class="smol" action="{{ url_for('su.delete_post') }}" method="post">
+                        <input type="hidden" value="{{ post["uid"] }}" name="uid">
+                        <button class="smol">[<span>DEL</span>]</button>
+                    </form>
+                    {{ post["uid"] }}
+                </span>
+                {% else %}
                 <span>{{ post["uid"] }}</span>
+                {% endif %}
                 <p>{{ post["body"] }}</p>
             </section>
         </article>

@@ -49,9 +49,9 @@ def find_post_page(post):
     board = post.board_alias
     page = 0
     while True:
-        posts = get_posts_for_board(board)
+        posts = get_posts_for_board(board, page)
         if len(posts) == 0:
-            return -1
+            return 0
         if post in posts:
             return page
         page += 1

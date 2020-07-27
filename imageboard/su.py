@@ -29,7 +29,7 @@ def rank_required(rank: int):
         def rank_required_dec_wrapper(**kwargs):
             if g.su is not None:
                 su = Super.query.filter_by(uid=g.su).first()
-                if su and su.rank == rank:
+                if su and su.rank == rank or su.rank == SuperTypes.ADM:
                     return view(**kwargs)
             flash(f"Required rank: {str(rank).split('.')[-1]}")
             return redirect(url_for('index'), code=401)
@@ -92,9 +92,10 @@ def delete_post():
     board = Board.query.order_by(Board.alias.asc()).first().alias
     page = 0
     if len([Super.query.filter_by(uid=g.su).all()]) > 0 and post:
+        page = find_post_page(post)
+        print(page)
         pdb.session.delete(post)
         pdb.session.commit()
-        page = find_post_page(post.board)
     return redirect(url_for('boards.board_paged', board=board, page=page), code=303)
 
 @bp.route('/logout')

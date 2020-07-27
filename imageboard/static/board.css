@@ -48,13 +48,41 @@
     margin-bottom: 2px;
 }
 
-#board_paged .left > a, #board_paged .right > span {
+#board_paged .left > a, #board_paged .right > span, #board_paged .right > span * {
     font-size: 0.8rem;
 }
 
 #board_paged img, #board_paged video {
     max-width: 100%;
     max-height: 18rem;
+}
+
+/* Superuser actions */
+.postid {
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.smol {
+    display: inline;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    background-color: transparent;
+}
+
+form.smol {
+    margin-right: 2px;
+}
+
+button.smol span {
+    color: #e55;
+}
+
+button.smol span:hover  {
+    text-decoration: underline;
+    cursor: pointer;
 }
 
 .replybox {

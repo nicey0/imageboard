@@ -21,8 +21,8 @@ def pg_utcnow(element, compiler, **kw):
 # Models
 class SuperTypes(Enum):
     APP = 0
-    ADM = 1
-    MOD = 2
+    MOD = 1
+    ADM = 2
 class Super(pdb.Model):
     uid = pdb.Column(pdb.String(64), primary_key=True, nullable=False)
     email = pdb.Column(pdb.String(160), unique=True, nullable=False)
