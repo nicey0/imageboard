@@ -1,4 +1,7 @@
 {% extends 'base.html' %}
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='board.css') }}">
+{% endblock head %}
 {% block body %}
 <main id="board_catalog">
     {% for page, posts in pposts %}

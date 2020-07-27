@@ -1,0 +1,39 @@
+main {
+    margin-left: 1rem;
+}
+
+h1 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+}
+
+form {
+    display: grid;
+    grid-template-rows: auto auto auto;
+    grid-template-columns: 5rem 15rem;
+    grid-template-areas:
+        "label-e input-e"
+        "label-p input-p"
+        "btn";
+}
+
+form label[for="email"] {
+    grid-area: "label-e"
+}
+
+form label[for="password"] {
+    grid-area: "label-e"
+}
+
+form input[type="email"] {
+    grid-area: "input-e"
+}
+
+form input[type="password"] {
+    grid-area: "input-p"
+}
+
+form button {
+    grid-area: "btn";
+    padding: 0.3rem 0;
+}

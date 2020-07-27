@@ -1,7 +1,7 @@
-from flask import Blueprint, g, session, request, redirect, url_for, jsonify, flash
+from flask import Blueprint, g, session, request, redirect, url_for, flash, render_template
 from functools import wraps
 from .db import pdb, SuperTypes, Super, Post, Board
-from .util import find_post_page, add_super, confirm_application, deny_application
+from .util import find_post_page, add_super, confirm_application, deny_application, get_all_boards
 from werkzeug.security import check_password_hash
 
 bp = Blueprint('su', __name__, url_prefix='/su')
@@ -40,11 +40,12 @@ def register():
             request.form["password"],
             SuperTypes.APP
         )
-    return redirect(url_for('index'), code=303)
+        return redirect(url_for('index'), code=303)
+    return render_template('su/signup.html', boards=get_all_boards())
 
-@bp.route('/appldashboard')
+@bp.route('/appdashboard')
 def applicants_dashboard():
-    return ""
+    return render_template('su/applicants_dashboard.html', boards=get_all_boards())
 
 @bp.route('/add', methods=['POST'])
 @rank_required(SuperTypes.ADM)
@@ -69,9 +70,9 @@ def login():
         if admin:
             if check_password_hash(admin.password, password):
                 session['su'] = admin.uid
-        else:
-            flash("email/password combination failed.")
-    return redirect(url_for('index'), code=303)
+                return redirect(url_for('index'), code=303)
+        flash("email/password combination failed.")
+    return render_template('su/login.html', boards=get_all_boards())
 
 @bp.route('/delete', methods=['POST'])
 @rank_required(SuperTypes.MOD)

@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template, request, abort, redirect, url_for, flash
+from .db import Super
 from .util import (get_all_boards, board_add_post_or_reply, get_posts_with_pages,
                    get_posts_with_replies_for_board)
 
@@ -6,6 +7,7 @@ bp = Blueprint('boards', __name__)
 
 @bp.route('/', methods=['GET', 'POST'])
 def index():
+    print(Super.query.all())
     return render_template("boards/index.html", boards=get_all_boards())
 
 @bp.route('/<board>')

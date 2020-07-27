@@ -40,10 +40,34 @@ li {
 }
 
 li.hori {
-    margin: 0 0.4rem 0 0;
+    margin: 0 0.75rem 0 0;
 }
 
-label[for="file-in"]:hover, label[for="rfile-in"]:hover, button:hover {
+/* Forms */
+form > * {
+    display: block
+}
+
+form input, form .file-input, form textarea, form button {
+    border: 1px solid var(--bd-a);
+    background-color: var(--bg-b);
+    margin-bottom: 0.5rem;
+}
+
+form button, form .file-input {
+    padding: 0.3rem 1.6rem;
+}
+
+form .file-input {
+    display: inline-block;
+}
+
+form input[type="file"] {
+    display: none;
+    opacity: 0;
+}
+
+form .file-input:hover, button:hover {
     filter: brightness(120%);
 }
 
@@ -79,47 +103,6 @@ header #boards {
     flex-wrap: wrap;
     align-items: flex-start;
     border-bottom: 1px solid var(--bd-a);
-}
-
-header #catalog_view {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    border-bottom: 1px solid var(--bd-a);
-}
-
-#board_catalog {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: flex-start;
-    align-content: flex-start;
-}
-
-#board_catalog .post {
-    width: 10%;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    border: 1px solid var(--bd-a);
-    padding: 1rem;
-    margin: 1rem;
-}
-
-#board_catalog .post img, #board_catalog .post video {
-    max-width: 100%;
-    max-height: 20rem;
-    margin-bottom: 5px;
-}
-
-#board_catalog .post span {
-    color: var(--black);
-    overflow: hidden;
-    text-overflow: auto;
-    max-height: 4.5rem;
-    text-align: center;
 }
 
 #index section {

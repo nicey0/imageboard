@@ -9,6 +9,7 @@ from werkzeug.security import generate_password_hash
 PAGE_SIZE = 10
 POST_LIMIT = 150
 EXTENSIONS = {'image': {'jpg', 'jpeg', 'png', 'gif'}, 'video': {'mp4', 'webm'}}
+pdb.init_app(app)
 
 def get_all_boards():
     return Board.query.all()
@@ -95,14 +96,14 @@ def board_add_post_or_reply(form, files, board, post_uid=''):
     file.save(path.join(app.config['UPLOAD_FOLDER'], uid+'.'+filetype))
 
 def _board_addpost(uid, body, filename, filetype, ftt, board):
-    alias = Board.query.filter_by(alias=board).first().alias
     pdb.session.add(
-        Post(uid=uid, body=body, board_alias=alias, filename=filename, filetype=filetype, ftt=ftt)
+        Post(uid=uid, body=body, board_alias=board, filename=filename, filetype=filetype, ftt=ftt)
     )
 
 def _board_addreply(uid, body, filename, filetype, ftt, post_uid):
     pdb.session.add(
-        Post(uid=uid, body=body, filename=filename, filetype=filetype, ftt=ftt)
+        Response(uid=uid, body=body, filename=filename, filetype=filetype, ftt=ftt,
+                 post_uid=post_uid)
     )
 
 def add_super(email, password, rank):

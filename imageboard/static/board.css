@@ -1,31 +1,3 @@
-/* Forms */
-form > * {
-    display: block;
-}
-
-form .file-input, form textarea, form button {
-    border: 1px solid var(--bd-a);
-    background-color: var(--bg-b);
-    margin-bottom: 0.5rem;
-}
-
-form button, form .file-input {
-    padding: 0.3rem 1.6rem;
-}
-
-form .file-input {
-    display: inline-block;
-}
-
-form .file-input:hover {
-    filter: brightness(120%);
-}
-
-form input[type="file"] {
-    display: none;
-    opacity: 0;
-}
-
 /*
  * Paged view
 */
