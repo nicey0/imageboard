@@ -24,12 +24,15 @@ def board_paged(board, page):
     except ValueError:
         abort(404)
     lposts = get_posts_with_replies_for_board(board, page=page)
+    lpage = False
+    if len(get_posts_with_replies_for_board(board, page=page+1)) == 0:
+        lpage = True
     if page != 0 and len(lposts) == 0:
         abort(404)
     if page < 0:
         page = 0
     return render_template("boards/board_paged.html", posts=lposts, boards=get_all_boards(), cboard=board,
-                           page=page)
+                           page=page, lpage=lpage)
 
 @bp.route('/<board>/reply/<uid>', methods=['GET' ,'POST'])
 @limiter.limit("2 per minute")

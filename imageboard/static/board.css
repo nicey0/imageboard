@@ -2,6 +2,10 @@
  * Paged view
 */
 
+body {
+    padding-bottom: 5rem;
+}
+
 /* Thread */
 #board_paged .thread {
     display: flex;

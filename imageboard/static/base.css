@@ -126,15 +126,16 @@ header #boards {
 footer {
     position: absolute;
     bottom: 0;
-    border-top: 1px solid var(--bd-a);
     width: 100%;
 }
 
 footer > * {
     padding: 0.5rem;
-}
-
-footer #sudash {
+    border-top: 1px solid var(--bd-a);
     display: flex;
     flex-direction: row;
+}
+
+footer > ul > * {
+    margin: 0.5rem 0;
 }

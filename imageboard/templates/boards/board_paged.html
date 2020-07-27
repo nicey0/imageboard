@@ -82,4 +82,17 @@
     {% endfor %}
 </main>
 {% endblock body %}
-
+{% block footer %}
+<ul id="pages">
+    {% if page != 0 %}
+        <li class="hori">
+            [<a href="{{ url_for('boards.board_paged', board=cboard, page=page-1) }}">Previous</a>]
+        </li>
+    {% endif %}
+    {% if not lpage %}
+        <li class="hori">
+            [<a href="{{ url_for('boards.board_paged', board=cboard, page=page+1) }}">Next</a>]
+        </li>
+    {% endif %}
+</ul>
+{% endblock footer %}

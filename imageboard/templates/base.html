@@ -25,6 +25,8 @@
     {% block body %}
     {% endblock body %}
     <footer>
+        {% block footer %}
+        {% endblock footer %}
         <ul id="sudash">
             {% if g.su %}
             <li class="hori">[<a href="{{ url_for('su.su_list') }}">Superuser List</a>]</li>
