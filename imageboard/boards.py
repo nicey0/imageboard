@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, request, abort, redirect, url_for
 from .db import Super
 from .util import (get_all_boards, board_add_post_or_reply, get_posts_with_pages,
                    get_posts_with_replies_for_board)
+from imageboard import limiter
 
 bp = Blueprint('boards', __name__)
 
@@ -14,6 +15,7 @@ def index():
 def board_no_page(board):
     return redirect(url_for('boards.board_paged', board=board, page=0))
 @bp.route('/<board>/<int:page>', methods=['GET', 'POST'])
+@limiter.limit("60 per minute")
 def board_paged(board, page):
     if request.method == 'POST':
         board_add_post_or_reply(request.form, request.files, board)
@@ -30,6 +32,7 @@ def board_paged(board, page):
                            page=page)
 
 @bp.route('/<board>/reply/<uid>', methods=['GET' ,'POST'])
+@limiter.limit("2 per minute")
 def reply(board, uid):
     if request.method == 'POST':
         board_add_post_or_reply(request.form, request.files, board, uid)

@@ -26,8 +26,14 @@
     {% endblock body %}
     <footer>
         <ul id="sudash">
+            {% if g.su %}
+            <li class="hori">[<a href="{{ url_for('su.su_list') }}">Superuser List</a>]</li>
+            <li class="hori">[<a href="{{ url_for('su.applicants_dashboard') }}">Applicants</a>]</li>
+            <li class="hori">[<a href="{{ url_for('su.logout') }}">Logout</a>]</li>
+            {% else %}
             <li class="hori">[<a href="{{ url_for('su.login') }}">Login</a>]</li>
             <li class="hori">[<a href="{{ url_for('su.register') }}">Register</a>]</li>
+            {% endif %}
         </ul>
     </footer>
 </body>

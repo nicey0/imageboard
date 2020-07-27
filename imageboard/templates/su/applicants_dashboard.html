@@ -1,2 +1,29 @@
 {% extends 'base.html' %}
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='su.css') }}">
+{% endblock head %}
+{% block body %}
+<main id="login">
+    <h1>Applicants Dashboard</h1>
+    <div class="sp"></div>
+    <ul class="su">
+        {% for ap in applicants %}
+        <li class="applicant">
+            <form class="add" action="{{ url_for('su.add_moderator') }}" method="post">
+                <input type="hidden" name="email" value="{{ ap['email'] }}">
+                <input type="hidden" name="rank" value="adm">
+                <button>Accept [ADM]</button>
+            </form>
+            <form class="add" action="{{ url_for('su.add_moderator') }}" method="post">
+                <input type="hidden" name="email" value="{{ ap['email'] }}">
+                <input type="hidden" name="rank" value="mod">
+                <button>Accept [MOD]</button>
+            </form>
+            <form class="deny" action="{{ url_for('su.deny_su_application') }}" method="post"><input type="hidden" name="email" value="{{ ap['email'] }}"><button>Deny</button></form>
+            <span class="email">{{ ap['email'] }}</span>
+        </li>
+        {% endfor %}
+    </ul>
+</main>
+{% endblock body %}
 

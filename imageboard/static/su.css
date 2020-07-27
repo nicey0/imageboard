@@ -4,7 +4,13 @@ main {
 
 h1 {
     font-size: 1.2rem;
-    margin-bottom: 0.5rem;
+}
+
+div.sp {
+    min-width: 15rem;
+    max-width: 15rem;
+    background-color: var(--bd-a);
+    height: 1px;
 }
 
 form {
@@ -15,6 +21,18 @@ form {
         "label-e input-e"
         "label-p input-p"
         "btn";
+}
+
+ul.su {
+    border-left: 1px solid var(--bd-a);
+    padding-top: 0.25rem;
+    padding-left: 0.5rem;
+    margin-bottom: 1rem;
+    min-height: 1rem;
+}
+
+.login-register {
+    margin-bottom: 0.5rem;
 }
 
 form label[for="email"] {
@@ -36,4 +54,41 @@ form input[type="password"] {
 form button {
     grid-area: "btn";
     padding: 0.3rem 0;
+}
+
+li.applicant {
+    display: flex;
+    align-items: center;
+    grid-template-areas:
+    "email" "add" "deny"
+}
+
+li.applicant form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+li.applicant button {
+    padding: 0.3rem 1.6rem;
+    margin: 0.2rem 0.4rem 0.2rem 0;
+    width: 100%;
+    height: 100%;
+}
+
+li.applicant .email {
+    grid-area: "email";
+    margin-left: 0.5rem;
+}
+
+li.applicant .add {
+    grid-area: "add";
+}
+
+li.applicant .deny {
+    grid-area: "deny";
+}
+
+li.sulist {
+    display: block;
 }

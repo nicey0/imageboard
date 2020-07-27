@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='su.css') }}">
+{% endblock head %}
+{% block body %}
+<main id="login">
+    <h1>Administrators</h1>
+    <div class="sp"></div>
+    <ul class="su">
+        {% for a in admins %}
+        <li class="sulist">
+            <span class="email">{{ a['email'] }}</span>
+        </li>
+        {% endfor %}
+    </ul>
+    <h1>Moderators</h1>
+    <div class="sp"></div>
+    <ul class="su">
+        {% for m in mods %}
+        <li class="sulist">
+            <span class="email">{{ m['email'] }}</span>
+        </li>
+        {% endfor %}
+    </ul>
+</main>
+{% endblock body %}
+

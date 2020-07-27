@@ -1,9 +1,10 @@
 from flask import Flask
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
 
 app = Flask(__name__)
 puri = "postgresql://localhost:5432/imageboard"
 upload = 'imageboard/static/POSTS/'
-
 class Production:
     SECRET_KEY = "TODO"
     SQLALCHEMY_DATABASE_URI = puri
@@ -15,6 +16,7 @@ class Development:
     SQLALCHEMY_TRACK_MODIFICATIONS = True
     UPLOAD_FOLDER = upload + 'DEVELOPMENT'
 app.config.from_object(Development())
+limiter = Limiter(app, key_func=get_remote_address)
 
 # Board
 from . import boards
