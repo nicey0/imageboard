@@ -93,7 +93,6 @@ def delete_post():
     page = 0
     if len([Super.query.filter_by(uid=g.su).all()]) > 0 and post:
         page = find_post_page(post)
-        print(page)
         pdb.session.delete(post)
         pdb.session.commit()
     return redirect(url_for('boards.board_paged', board=board, page=page), code=303)

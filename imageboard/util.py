@@ -128,7 +128,6 @@ def deny_application(email):
 def delete_post(post):
     pdb.session.delete(post)
     if post.filename and post.filetype:
-        print(post.body, post.uid, post.filetype)
         print("Removing", app.config['UPLOAD_FOLDER']+'/'+post.uid+'.'+post.filetype)
         remove(app.config['UPLOAD_FOLDER']+'/'+post.uid+'.'+post.filetype)
 
